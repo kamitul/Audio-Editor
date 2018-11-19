@@ -1,2 +1,2 @@
 # Audio-Editor
-DJ Audio editor
+DJ Audio editor program written in C# and assembly back end
