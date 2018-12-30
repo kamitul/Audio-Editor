@@ -1,1 +1,1 @@
-Program, służący do nakładania edycji plików dzwiękowych poprzez nakładanie na nie wybranych filtrów zaimplementowanych w programie
+Program, służący do edycji plików dzwiękowych poprzez nakładanie na nie wybranych filtrów zaimplementowanych w programie
