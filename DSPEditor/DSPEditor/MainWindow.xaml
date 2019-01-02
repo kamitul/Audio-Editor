@@ -57,7 +57,7 @@
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1"
-              Margin="278.547,4.887,5.264,4.736" Grid.Column="1">
+              Margin="278.547,9.887,5.264,164.566" Grid.Column="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -66,7 +66,7 @@
                 <RowDefinition Height = "*" />
                 <RowDefinition Height = "*" />
             </Grid.RowDefinitions>
-            <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="70" Margin="10,10,0.34,0" Grid.RowSpan="2">
+            <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="70" Margin="15,10,0.34,0" Grid.RowSpan="2">
                 <Button Name="PlayButton"
                         VerticalAlignment="Top"
                         Width="50"
@@ -97,8 +97,17 @@
                         Content="Mute" />
             </WrapPanel>
             <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="35" Margin="10,9.717,0.34,-0.34">
-                <Slider VerticalAlignment="Center" Maximum="100" Width="219" BorderBrush="#FF00FF18" />
+                <Slider VerticalAlignment="Center" Maximum="100" Width="210" BorderBrush="#FF00FF18" Margin="10,0,0,0" />
             </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <svl:SpectrumAnalyzer x:Name="spectrumAnalyzer"
+                                  Margin="10,10,25.453,-0.377"
+                                  BarCount="16" />
         </Grid>
         <svl:DigitalClock Grid.Row="1"
                           Grid.ColumnSpan="2"
@@ -106,25 +115,25 @@
                           ShowHours="False"
                           ShowSubSeconds="True"
                           HorizontalAlignment="Center"
-                          Margin="5" Background="Black" />
+                          Margin="256,9.887,256.264,164.566" Background="Black" Foreground="#FF489A48" BorderBrush="#FF489A48" Grid.RowSpan="2" />
         <Grid Grid.Row="2"
-              Grid.ColumnSpan="2">
+              Grid.ColumnSpan="2" Margin="0,10.264,0.264,89.189" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <svl:WaveformTimeline x:Name="waveformTimeline"
-                                  Margin="5"
-                                  BorderThickness="1" />
+                                  Margin="10,5,5,5"
+                                  BorderThickness="1" Background="#FF49494F" BorderBrush="#FF49B845" />
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center"
                         Grid.Column="1">
                 <svl:TimeEditor Margin="5"
                                 Name="repeatStartTimeEdit"
-                                IsReadOnly="True" />
+                                IsReadOnly="True" Background="#FF38383B" Foreground="#FF4AC044" BorderBrush="#FF4E9447" CaretBrush="#FF4E9447" />
                 <svl:TimeEditor Margin="5"
                                 Name="repeatStopTimeEdit"
-                                IsReadOnly="True" />
+                                IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" />
             </StackPanel>
         </Grid>
     </Grid>
