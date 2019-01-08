@@ -6,21 +6,21 @@
         xmlns:local="clr-namespace:DSPEditor"
         xmlns:svl="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
-        Title="DSPEditor" Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12">
+        Title="DSPEditor" Height="524.717" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12">
     <Grid Background="#FF3F3F46" Opacity="0.95">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="180" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="127" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*" />
             <ColumnDefinition Width="60*" />
         </Grid.ColumnDefinitions>
         <Menu DockPanel.Dock="Top" Background="#FFF0F0F0" FontSize="12" Grid.Row="0"
-              Grid.ColumnSpan="2">
+              Grid.ColumnSpan="2" Margin="0,0,0.264,0.113">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open"/>
                 <MenuItem Header="_Close"/>
@@ -34,9 +34,7 @@
             <MenuItem Header="_Effect">
                 <MenuItem Header="_Modulation effects">
                     <MenuItem Header="_Flanger"/>
-                    <MenuItem Header="_Ring modulation"/>
                     <MenuItem Header="_Tremolo"/>
-                    <MenuItem Header="_Flanger"/>
                     <MenuItem Header="_Chorus"/>
                 </MenuItem>
                 <MenuItem Header="_Dynamic effects">
@@ -45,19 +43,19 @@
                 <MenuItem Header="_Time-based effects">
                     <MenuItem Header="_Echo"/>
                     <MenuItem Header="_Reverb"/>
-                    <MenuItem Header="_Delay"/>
                 </MenuItem>
                 <MenuItem Header="_Customm">
                     <MenuItem Header="_Wah-wah"/>
                     <MenuItem Header="_Vibrato"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Generate">
-                <MenuItem Header="_Noise"/>
+            <MenuItem Header="_DLL Type">
+                <MenuItem Header="_C++"/>
+                <MenuItem Header="_MASMx86"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1"
-              Margin="278.547,9.887,5.264,164.566" Grid.Column="1" Grid.RowSpan="2">
+              Margin="278.547,9.887,5.264,164.962" Grid.Column="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -67,74 +65,206 @@
                 <RowDefinition Height = "*" />
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="70" Margin="15,10,0.34,0" Grid.RowSpan="2">
-                <Button Name="PlayButton"
-                        VerticalAlignment="Top"
-                        Width="50"
-                        Height="24"
-                        Margin="2"
-                        IsEnabled="False"
-                        Content="Play" />
-                <Button Name="PauseButton"
-                        VerticalAlignment="Top"
-                        Width="50"
-                        Height="24"
-                        Margin="2"
-                        IsEnabled="False"
-                        Content="Pause" />
-                <Button Name="StopButton"
-                        VerticalAlignment="Top"
-                        Width="50"
-                        Height="24"
-                        Margin="2"
-                        IsEnabled="False"
-                        Content="Stop" />
-                <Button Name="MuteButton"
-                        VerticalAlignment="Top"
-                        Width="50"
-                        Height="24"
-                        Margin="2"
-                        IsEnabled="False"
-                        Content="Mute" />
+                <Button x:Name="PlayButton" Width="45"
+        Height="45" Margin="8,0,5,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Stroke="Black"
+                         StrokeThickness="2">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <GradientStop Offset="1"
+                                          Color="Lime" />
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <RadialGradientBrush.Transform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleY="0.65" />
+                                                </TransformGroup>
+                                            </RadialGradientBrush.Transform>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="play.png" Height="102" Width="84" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+                <Button x:Name="PauseButton" Width="45"
+        Height="45" Margin="0,0,5,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Stroke="Black"
+                         StrokeThickness="2">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <GradientStop Offset="1"
+                                          Color="Lime" />
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <RadialGradientBrush.Transform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleY="0.65" />
+                                                </TransformGroup>
+                                            </RadialGradientBrush.Transform>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="pause.png" Height="104" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+                <Button x:Name="StopButton" Width="45"
+        Height="45" Margin="0,0,5,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Stroke="Black"
+                         StrokeThickness="2">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <GradientStop Offset="1"
+                                          Color="Lime" />
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEE122" />
+                                            <RadialGradientBrush.Transform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleY="0.65" />
+                                                </TransformGroup>
+                                            </RadialGradientBrush.Transform>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="stop.png" Height="159" Width="95" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+                <Button x:Name="MuteButton" Width="45"
+        Height="45" Margin="5,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Stroke="#FF1CFF00"
+                         StrokeThickness="3">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <GradientStop Offset="1"
+                                          Color="Lime" />
+                                            <GradientStop Offset="1"
+                                          Color="#FFFEDF16" />
+                                            <GradientStop Color="#FFCCE1CC" Offset="1"/>
+                                            <GradientStop Color="#FFFEDF16" Offset="1"/>
+                                            <RadialGradientBrush.Transform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleY="0.65" />
+                                                </TransformGroup>
+                                            </RadialGradientBrush.Transform>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="mute.png" Height="103" Width="97" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
             </WrapPanel>
             <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="35" Margin="10,9.717,0.34,-0.34">
-                <Slider VerticalAlignment="Center" Maximum="100" Width="210" BorderBrush="#FF00FF18" Margin="10,0,0,0" />
+                <Slider VerticalAlignment="Center" Maximum="100" Width="210" BorderBrush="#FF00FF18" Margin="10,12,0,0" Foreground="#FFFFF101" />
             </WrapPanel>
         </Grid>
-        <Grid Grid.Row="1"
-              Grid.Column="0">
+        <Grid
+              Grid.Column="0" Margin="0,18,0.453,179.962" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <svl:SpectrumAnalyzer x:Name="spectrumAnalyzer"
-                                  Margin="10,10,25.453,-0.377"
+                                  Margin="10,10,25.453,9.528"
                                   BarCount="16" />
         </Grid>
         <svl:DigitalClock Grid.Row="1"
-                          Grid.ColumnSpan="2"
                           x:Name="clockDisplay"
                           ShowHours="False"
                           ShowSubSeconds="True"
                           HorizontalAlignment="Center"
-                          Margin="256,9.887,256.264,164.566" Background="Black" Foreground="#FF489A48" BorderBrush="#FF489A48" Grid.RowSpan="2" />
+                          Margin="3,9.887,265,9.736" Background="Black" Foreground="#FF489A48" BorderBrush="#FF489A48" Grid.Column="1" Width="252" />
         <Grid Grid.Row="2"
-              Grid.ColumnSpan="2" Margin="0,10.264,0.264,89.189" Grid.RowSpan="2">
+              Grid.ColumnSpan="2" Margin="0,10.264,0.264,0.962">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="516*" />
+                <ColumnDefinition Width="179*"/>
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <svl:WaveformTimeline x:Name="waveformTimeline"
-                                  Margin="10,5,5,5"
-                                  BorderThickness="1" Background="#FF49494F" BorderBrush="#FF49B845" />
+                                  Margin="10,5,4.641,-0.094"
+                                  BorderThickness="1" Background="#FF49494F" BorderBrush="#FF49B845" Grid.ColumnSpan="2" />
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center"
-                        Grid.Column="1">
-                <svl:TimeEditor Margin="5"
+                        Grid.Column="2" Margin="0.359,52,0.264,50.906">
+                <svl:TimeEditor Margin="5,5,10,5"
                                 Name="repeatStartTimeEdit"
                                 IsReadOnly="True" Background="#FF38383B" Foreground="#FF4AC044" BorderBrush="#FF4E9447" CaretBrush="#FF4E9447" />
-                <svl:TimeEditor Margin="5"
+                <svl:TimeEditor Margin="5,5,10,5"
                                 Name="repeatStopTimeEdit"
                                 IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" />
             </StackPanel>
         </Grid>
+        <ProgressBar x:Name="AlgoTime" Height="25" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+        <ScrollViewer x:Name="OutputLog" Height="118" Margin="10,9.604,10.264,0" Grid.Row="4" VerticalAlignment="Top" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" Background="#FFE7E7E7"/>
     </Grid>
 </Window>

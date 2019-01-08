@@ -103,5 +103,14 @@
   <ItemGroup>
     <Resource Include="DSPEditor.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="play-button-in-pure-css.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mute.png" />
+    <Resource Include="pause.png" />
+    <Resource Include="play.png" />
+    <Resource Include="stop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
