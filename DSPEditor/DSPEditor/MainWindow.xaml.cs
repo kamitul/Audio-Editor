@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
+using DSPEditor.Audio;
 
 namespace DSPEditor
 {
@@ -23,6 +26,17 @@ namespace DSPEditor
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Audio files (*.mp3;*.wav)|*.mp3;*.wav|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = @"c:\";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
+            }
         }
     }
 }
