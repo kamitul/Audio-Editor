@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioItemBuilder
 {
-    public class WAVAudioItemBuilder : IAudioItemBuilder
+    public class WAVAudioItemBuilder : AudioBuilder, IAudioItemBuilder
     {
-        AudioItem audioItem;
-
         public void SetFullPath(string filePath)
         {
             throw new NotImplementedException();

@@ -66,6 +66,9 @@ namespace DSPEditor.Audio
                 case AudioType.WAV:
                     audioItemBuilder = new WAVAudioItemBuilder();
                     break;
+                case AudioType.UNDEFINED:
+                    audioItemBuilder = null;
+                    break;
             }
 
         }

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioItemBuilder
 {
-    public class MP3AudioItemBuilder : AudioBuilder, IAudioItemBuilder
+    public abstract class AudioBuilder
     {
-        public void SetFullPath(string filePath)
-        {
-            throw new NotImplementedException();
-        }
+        private AudioItem audioItem;
+
+        public AudioItem AudioItem { get => audioItem; set => audioItem = value; }
     }
 }

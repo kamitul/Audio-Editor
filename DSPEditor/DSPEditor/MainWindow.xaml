@@ -23,7 +23,7 @@
               Grid.ColumnSpan="2" Margin="0,0,0.264,0.113">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="OpenFile"/>
-                <MenuItem Header="_Close"/>
+                <MenuItem Header="_Close" Click="Close"/>
                 <MenuItem Header="_Save"/>
                 <MenuItem Header="_Load"/>
                 <MenuItem Header="_Export">

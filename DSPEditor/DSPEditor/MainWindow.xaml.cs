@@ -38,5 +38,10 @@ namespace DSPEditor
                 AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
             }
         }
+
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();  
+        }
     }
 }
