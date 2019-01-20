@@ -7,10 +7,13 @@ using NAudio.Wave;
 
 namespace DSPEditor.Audio
 {
+    [Serializable]
     public struct AudioItem
     {
         private string filePath;
+        private float[] audioBuffer;
 
-
+        public float[] AudioBuffer { get => audioBuffer; set => audioBuffer = value; }
+        public string FilePath { get => filePath; set => filePath = value; }
     }
 }

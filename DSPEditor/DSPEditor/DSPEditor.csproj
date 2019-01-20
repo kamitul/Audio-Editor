@@ -68,11 +68,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AudioEffects\AudioPhaserEffect.cs" />
+    <Compile Include="AudioEffects\AudioTremoloEffect.cs" />
+    <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
+    <Compile Include="AudioEffects\BPIIR.cs" />
     <Compile Include="AudioItemBuilder\IAudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\WAVAudioItemBuilder.cs" />
-    <Compile Include="Audio\AudioItem.cs" />
-    <Compile Include="Audio\AudioItemManager.cs" />
+    <Compile Include="AudioData\AudioItem.cs" />
+    <Compile Include="AudioManager\AudioItemManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

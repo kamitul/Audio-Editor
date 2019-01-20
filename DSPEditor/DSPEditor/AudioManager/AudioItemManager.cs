@@ -84,9 +84,9 @@ namespace DSPEditor.Audio
         {
             switch(fileExtension)
             {
-                case "mp3":
+                case ".mp3":
                     return AudioType.MP3;
-                case "wav":
+                case ".wav":
                     return AudioType.WAV;
                 default:
                     return AudioType.UNDEFINED;
