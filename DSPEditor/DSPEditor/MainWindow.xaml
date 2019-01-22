@@ -24,29 +24,26 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="OpenFile"/>
                 <MenuItem Header="_Close" Click="Close"/>
-                <MenuItem Header="_Save"/>
-                <MenuItem Header="_Load"/>
+                <MenuItem Header="_Save" Click="SaveProject"/>
+                <MenuItem Header="_Load" Click="LoadProject"/>
                 <MenuItem Header="_Export">
-                    <MenuItem Header="_MP3 File"/>
-                    <MenuItem Header="_WAV File"/>
+                    <MenuItem Header="_MP3 File" Click="ExportMP3File"/>
+                    <MenuItem Header="_WAV File" Click="ExportWAVFile"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Effect">
                 <MenuItem Header="_Modulation effects">
-                    <MenuItem Header="_Flanger"/>
-                    <MenuItem Header="_Tremolo"/>
-                    <MenuItem Header="_Chorus"/>
-                </MenuItem>
-                <MenuItem Header="_Dynamic effects">
-                    <MenuItem Header="_Fuzz"/>
+                    <MenuItem Header="_Flanger" Click="FlangerSample"/>
+                    <MenuItem Header="_Tremolo" Click="TremoloSample"/>
+                    <MenuItem Header="_Chorus" Click="ChorusSample"/>
                 </MenuItem>
                 <MenuItem Header="_Time-based effects">
-                    <MenuItem Header="_Echo"/>
-                    <MenuItem Header="_Reverb"/>
+                    <MenuItem Header="_Echo" Click="EchoSample"/>
+                    <MenuItem Header="_Reverb" Click="ReverbSample"/>
                 </MenuItem>
-                <MenuItem Header="_Customm">
-                    <MenuItem Header="_Wah-wah"/>
-                    <MenuItem Header="_Vibrato"/>
+                <MenuItem Header="_Custom">
+                    <MenuItem Header="_Wah-wah" Click="WahWahSample"/>
+                    <MenuItem Header="_Phaser" Click="PhaserSample"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_DLL Type">
@@ -66,7 +63,7 @@
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="70" Margin="15,10,0.34,0" Grid.RowSpan="2">
                 <Button x:Name="PlayButton" Width="45"
-        Height="45" Margin="8,0,5,0">
+        Height="45" Margin="8,0,5,0" Click="PlaySample">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -105,7 +102,7 @@
                     </Image>
                 </Button>
                 <Button x:Name="PauseButton" Width="45"
-        Height="45" Margin="0,0,5,0">
+        Height="45" Margin="0,0,5,0" Click="PauseSample">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -144,7 +141,7 @@
                     </Image>
                 </Button>
                 <Button x:Name="StopButton" Width="45"
-        Height="45" Margin="0,0,5,0">
+        Height="45" Margin="0,0,5,0" Click="StopSample">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -183,7 +180,7 @@
                     </Image>
                 </Button>
                 <Button x:Name="MuteButton" Width="45"
-        Height="45" Margin="5,0,0,0">
+        Height="45" Margin="5,0,0,0" Click="MuteSample">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -225,7 +222,7 @@
                 </Button>
             </WrapPanel>
             <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="35" Margin="10,9.717,0.34,-0.34">
-                <Slider VerticalAlignment="Center" Maximum="100" Width="210" BorderBrush="#FF00FF18" Margin="10,12,0,0" Foreground="#FFFFF101" />
+                <Slider VerticalAlignment="Center" Maximum="100" Width="210" BorderBrush="#FF00FF18" Margin="10,12,0,0" Foreground="#FFFFF101" ValueChanged="SoundVolumeChanged" />
             </WrapPanel>
         </Grid>
         <Grid

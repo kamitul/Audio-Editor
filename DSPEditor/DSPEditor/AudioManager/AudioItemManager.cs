@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Linq;
 using System.IO;
 
 namespace DSPEditor.Audio
@@ -92,5 +91,31 @@ namespace DSPEditor.Audio
                     return AudioType.UNDEFINED;
             }
         }
+
+        public void AddDelayEffect()
+        {
+
+        }
+
+        public void AddFlangerEffect()
+        {
+
+        }
+
+        public void AddPhaserEffect()
+        {
+
+        }
+
+        public void AddTremoloEffect()
+        {
+
+        }
+
+        public void AddWahWahEffect()
+        {
+            
+        }
+
     }
 }

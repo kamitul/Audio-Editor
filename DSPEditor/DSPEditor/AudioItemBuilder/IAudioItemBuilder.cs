@@ -9,5 +9,6 @@ namespace DSPEditor.AudioItemBuilder
     public interface IAudioItemBuilder
     {
         void SetFullPath(string filePath);
+        void OpenAudioFile(string filePath);
     }
 }

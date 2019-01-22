@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,24 +18,19 @@ namespace DSPEditor.AudioItemBuilder
 
         public void SetFullPath(string filePath)
         {
-            OpenWAVFile(filePath);
+            OpenAudioFile(filePath);
         }
 
-        private void OpenWAVFile(string filePath)
+        public void OpenAudioFile(string filePath)
         {
-            using (Mp3FileReader reader = new Mp3FileReader(filePath))
+            using (AudioFileReader reader = new AudioFileReader(filePath))
             {
-                byte[] bytesBuffer = new byte[reader.Length];
-                int read = reader.Read(bytesBuffer, 0, bytesBuffer.Length);
-                var floatSamples = new double[read / 2];
-                for (int sampleIndex = 0; sampleIndex < read / 2; sampleIndex++)
-                {
-                    var intSampleValue = BitConverter.ToInt16(bytesBuffer, sampleIndex * 2);
-                    floatSamples[sampleIndex] = intSampleValue / 32768.0;
-                }
+                Debug.Assert(reader.WaveFormat.BitsPerSample != 16, "Only works with 16 bit audio");
+                var samples = new float[reader.Length / 2];
+                reader.Read(samples, 0, samples.Length / 2);
 
+                audioItem.AudioBuffer = samples;
                 audioItem.FilePath = filePath;
-                //audioItem.AudioBuffer = floatSamples;
             }
         }
     }

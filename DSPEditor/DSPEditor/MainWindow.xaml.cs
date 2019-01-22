@@ -43,5 +43,90 @@ namespace DSPEditor
         {
             Application.Current.Shutdown();  
         }
+
+        private void SaveProject(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadProject(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExportMP3File(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExportWAVFile(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FlangerSample(object sender, RoutedEventArgs e)
+        {
+            AudioItemManager.Instance.AddFlangerEffect();
+        }
+
+        private void TremoloSample(object sender, RoutedEventArgs e)
+        {
+            AudioItemManager.Instance.AddTremoloEffect();
+        }
+
+        private void ChorusSample(object sender, RoutedEventArgs e)
+        {
+           // AudioItemManager.Instance.
+        }
+
+        private void FuzzSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EchoSample(object sender, RoutedEventArgs e)
+        {
+            AudioItemManager.Instance.AddDelayEffect();
+        }
+
+        private void ReverbSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WahWahSample(object sender, RoutedEventArgs e)
+        {
+            AudioItemManager.Instance.AddWahWahEffect();
+        }
+
+        private void PhaserSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SoundVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void MuteSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StopSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PauseSample(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlaySample(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

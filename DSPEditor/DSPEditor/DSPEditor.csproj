@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,10 +69,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AudioEffects\AudioPhaserEffect.cs" />
-    <Compile Include="AudioEffects\AudioTremoloEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioDelayEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioFlangerEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioPhaserEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioReverbEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioTremoloEffect.cs" />
+    <Compile Include="DSPAudioEffects\AudioWahWahEffect.cs" />
     <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
-    <Compile Include="AudioEffects\BPIIR.cs" />
     <Compile Include="AudioItemBuilder\IAudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\WAVAudioItemBuilder.cs" />
@@ -121,5 +125,6 @@
     <Resource Include="play.png" />
     <Resource Include="stop.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
