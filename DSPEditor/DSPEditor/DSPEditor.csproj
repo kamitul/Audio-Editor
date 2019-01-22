@@ -69,12 +69,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DSPAudioEffects\AudioDelayEffect.cs" />
-    <Compile Include="DSPAudioEffects\AudioFlangerEffect.cs" />
-    <Compile Include="DSPAudioEffects\AudioPhaserEffect.cs" />
-    <Compile Include="DSPAudioEffects\AudioReverbEffect.cs" />
-    <Compile Include="DSPAudioEffects\AudioTremoloEffect.cs" />
-    <Compile Include="DSPAudioEffects\AudioWahWahEffect.cs" />
+    <Compile Include="AudioEffects\AudioDelayEffect.cs" />
+    <Compile Include="AudioEffects\AudioFlangerEffect.cs" />
+    <Compile Include="AudioEffects\AudioPhaserEffect.cs" />
+    <Compile Include="AudioEffects\AudioReverbEffect.cs" />
+    <Compile Include="AudioEffects\AudioTremoloEffect.cs" />
+    <Compile Include="AudioEffects\AudioWahWahEffect.cs" />
     <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
     <Compile Include="AudioItemBuilder\IAudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />
