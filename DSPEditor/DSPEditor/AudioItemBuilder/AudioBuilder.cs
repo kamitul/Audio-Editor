@@ -10,5 +10,7 @@ namespace DSPEditor.AudioItemBuilder
     public abstract class AudioBuilder
     {
         protected AudioItem audioItem;
+
+        public AudioItem AudioItem { get => audioItem; set => audioItem = value; }
     }
 }

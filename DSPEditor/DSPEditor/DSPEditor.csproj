@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -69,10 +70,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AudioEffects\AudioChorusEffect.cs" />
     <Compile Include="AudioEffects\AudioDelayEffect.cs" />
+    <Compile Include="AudioEffects\AudioDistortionEffect.cs" />
     <Compile Include="AudioEffects\AudioFlangerEffect.cs" />
     <Compile Include="AudioEffects\AudioPhaserEffect.cs" />
     <Compile Include="AudioEffects\AudioReverbEffect.cs" />
+    <Compile Include="AudioEffects\AudioSineWaveEffect.cs" />
     <Compile Include="AudioEffects\AudioTremoloEffect.cs" />
     <Compile Include="AudioEffects\AudioWahWahEffect.cs" />
     <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\WAVAudioItemBuilder.cs" />
     <Compile Include="AudioData\AudioItem.cs" />
+    <Compile Include="AudioManager\AudioEffectManager.cs" />
     <Compile Include="AudioManager\AudioItemManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

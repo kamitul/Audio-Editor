@@ -11,9 +11,13 @@ namespace DSPEditor.Audio
     public struct AudioItem
     {
         private string filePath;
-        private float[] audioBuffer;
+        private float[] processedAudioBuffer;
+        private float[] originalAudioBuffer;
+        private WaveFormat waveFormat;
 
-        public float[] AudioBuffer { get => audioBuffer; set => audioBuffer = value; }
+        public float[] ProcessedAudioBuffer { get => processedAudioBuffer; set => processedAudioBuffer = value; }
         public string FilePath { get => filePath; set => filePath = value; }
+        public float[] OriginalAudioBuffer { get => originalAudioBuffer; set => originalAudioBuffer = value; }
+        public WaveFormat WaveFormat { get => waveFormat; set => waveFormat = value; }
     }
 }

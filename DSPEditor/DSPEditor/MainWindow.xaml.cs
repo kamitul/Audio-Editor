@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,6 +16,8 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using DSPEditor.Audio;
+using DSPEditor.AudioManager;
+using NAudio.Wave;
 
 namespace DSPEditor
 {
@@ -23,9 +26,13 @@ namespace DSPEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public static ProgressBar progressBar;
+
         public MainWindow()
         {
             InitializeComponent();
+            progressBar = AlgoTime;
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -61,47 +68,56 @@ namespace DSPEditor
 
         private void ExportWAVFile(object sender, RoutedEventArgs e)
         {
+            using (WaveFileWriter writer = new WaveFileWriter("C:\\Users\\Kamil\\Source\\Repos\\JA_K.Tulczyjew_EdytorDzwiekow\\DSPEditor\\DSPEditor\\track1.wav", AudioItemManager.GetAudioItem().WaveFormat))
+            {
+                writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+            }
 
         }
 
         private void FlangerSample(object sender, RoutedEventArgs e)
         {
-            AudioItemManager.Instance.AddFlangerEffect();
+            AudioEffectManager.Instance.AddFlangerEffect();
         }
 
         private void TremoloSample(object sender, RoutedEventArgs e)
         {
-            AudioItemManager.Instance.AddTremoloEffect();
+            AudioEffectManager.Instance.AddTremoloEffect();
         }
 
         private void ChorusSample(object sender, RoutedEventArgs e)
         {
-           // AudioItemManager.Instance.
-        }
-
-        private void FuzzSample(object sender, RoutedEventArgs e)
-        {
-
+            AudioEffectManager.Instance.AddChorusEffect();
         }
 
         private void EchoSample(object sender, RoutedEventArgs e)
         {
-            AudioItemManager.Instance.AddDelayEffect();
+            AudioEffectManager.Instance.AddDelayEffect();
         }
 
         private void ReverbSample(object sender, RoutedEventArgs e)
         {
-
+            AudioEffectManager.Instance.AddReverbEffect();
         }
 
         private void WahWahSample(object sender, RoutedEventArgs e)
         {
-            AudioItemManager.Instance.AddWahWahEffect();
+            AudioEffectManager.Instance.AddWahWahEffect();
         }
 
         private void PhaserSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.AddPhaserEffect();
+        }
 
+        private void SineWaveSample(object sender, RoutedEventArgs e)
+        {
+            AudioEffectManager.Instance.AddSineWaveEffect();
+        }
+
+        private void DistortionSample(object sender, RoutedEventArgs e)
+        {
+            AudioEffectManager.Instance.AddDistortionEffect();
         }
 
         private void SoundVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

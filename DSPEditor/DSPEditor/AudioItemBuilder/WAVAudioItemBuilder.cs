@@ -9,7 +9,7 @@ namespace DSPEditor.AudioItemBuilder
 
         public WAVAudioItemBuilder()
         {
-            audioItem = new AudioItem();
+            AudioItem = new AudioItem();
         }
 
         public void SetFullPath(string filePath)
@@ -25,8 +25,9 @@ namespace DSPEditor.AudioItemBuilder
                 var samples = new float[reader.Length / 2];
                 reader.Read(samples, 0, samples.Length / 2);
 
-                audioItem.AudioBuffer = samples;
+                audioItem.OriginalAudioBuffer = samples;
                 audioItem.FilePath = filePath;
+                audioItem.WaveFormat = reader.WaveFormat;
             }
         }
 

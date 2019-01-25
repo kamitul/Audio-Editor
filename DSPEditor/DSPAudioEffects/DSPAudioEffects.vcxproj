@@ -148,11 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AudioBIIPEffect.h" />
-    <ClInclude Include="AudioBIIREffect.h" />
     <ClInclude Include="AudioDelayEffect.h" />
+    <ClInclude Include="AudioDistortionEffect.h" />
     <ClInclude Include="AudioFlangerEffect.h" />
-    <ClInclude Include="AudioPhaserEffect.h" />
     <ClInclude Include="AudioReverbEffect.h" />
+    <ClInclude Include="AudioSineWaveEffect.h" />
     <ClInclude Include="AudioTremoloEffect.h" />
     <ClInclude Include="AudioWahWahEffect.h" />
     <ClInclude Include="stdafx.h" />

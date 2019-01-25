@@ -17,7 +17,7 @@ struct fract_delay {
 	double *wrtPtr;     /*delay write pointer*/
 };
 
-static fract_delay del;
+static fract_delay del{};
 
 
 extern "C" __declspec(dllexport) void DelayInit(double delay_samples, double dfb, double dfw, double dmix) {

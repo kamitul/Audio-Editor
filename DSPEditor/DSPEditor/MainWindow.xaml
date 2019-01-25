@@ -35,7 +35,6 @@
                 <MenuItem Header="_Modulation effects">
                     <MenuItem Header="_Flanger" Click="FlangerSample"/>
                     <MenuItem Header="_Tremolo" Click="TremoloSample"/>
-                    <MenuItem Header="_Chorus" Click="ChorusSample"/>
                 </MenuItem>
                 <MenuItem Header="_Time-based effects">
                     <MenuItem Header="_Echo" Click="EchoSample"/>
@@ -43,7 +42,8 @@
                 </MenuItem>
                 <MenuItem Header="_Custom">
                     <MenuItem Header="_Wah-wah" Click="WahWahSample"/>
-                    <MenuItem Header="_Phaser" Click="PhaserSample"/>
+                    <MenuItem Header="_Sinewave" Click="SineWaveSample"/>
+                    <MenuItem Header="_Distortion" Click="DistortionSample"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_DLL Type">
@@ -261,7 +261,7 @@
                                 IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" />
             </StackPanel>
         </Grid>
-        <ProgressBar x:Name="AlgoTime" Height="25" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+        <ProgressBar x:Name="AlgoTime" Height="25" Minimum="0" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
         <ScrollViewer x:Name="OutputLog" Height="118" Margin="10,9.604,10.264,0" Grid.Row="4" VerticalAlignment="Top" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" Background="#FFE7E7E7"/>
     </Grid>
 </Window>

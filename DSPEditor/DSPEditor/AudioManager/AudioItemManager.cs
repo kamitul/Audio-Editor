@@ -39,6 +39,16 @@ namespace DSPEditor.Audio
             }
         }
 
+        internal static void SetAudioItem(AudioItem value)
+        {
+            ((AudioBuilder)audioItemBuilder).AudioItem = value;
+        }
+
+        internal static AudioItem GetAudioItem()
+        {
+            return ((AudioBuilder)audioItemBuilder).AudioItem;
+        }
+
         AudioItemManager()
         {
         }
@@ -91,31 +101,5 @@ namespace DSPEditor.Audio
                     return AudioType.UNDEFINED;
             }
         }
-
-        public void AddDelayEffect()
-        {
-
-        }
-
-        public void AddFlangerEffect()
-        {
-
-        }
-
-        public void AddPhaserEffect()
-        {
-
-        }
-
-        public void AddTremoloEffect()
-        {
-
-        }
-
-        public void AddWahWahEffect()
-        {
-            
-        }
-
     }
 }

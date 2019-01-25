@@ -10,12 +10,10 @@ namespace DSPEditor.AudioEffects
     class AudioPhaserEffect
     {
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void PhaserInit(short effect_rate, short sampling, short maxf, short minf, short Q, double gainfactor, double pha_mixume, short freq_step, double dmix);
+        public static extern void PhaserInit(double rateParam, double widthParam);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float PhaserProcess(float xin);
+        public static extern float PhaserProcess(float inval);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void PhaserSweep();
     }
 }

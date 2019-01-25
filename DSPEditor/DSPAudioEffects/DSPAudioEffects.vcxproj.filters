@@ -30,19 +30,19 @@
     <ClInclude Include="AudioTremoloEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioBIIREffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AudioWahWahEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AudioBIIPEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioPhaserEffect.h">
+    <ClInclude Include="AudioReverbEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioReverbEffect.h">
+    <ClInclude Include="AudioSineWaveEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioDistortionEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
