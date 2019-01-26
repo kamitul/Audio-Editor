@@ -39,5 +39,10 @@ namespace DSPEditor.AudioItemBuilder
         {
             throw new NotImplementedException();
         }
+
+        public string GetFilePath()
+        {
+            return audioItem.FilePath;
+        }
     }
 }

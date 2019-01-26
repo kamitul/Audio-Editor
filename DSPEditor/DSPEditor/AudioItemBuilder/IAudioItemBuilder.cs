@@ -13,5 +13,6 @@ namespace DSPEditor.AudioItemBuilder
         void SetFullPath(string filePath);
         void OpenAudioFile(string filePath);
         WaveFileReader GetWaveStream();
+        string GetFilePath();
     }
 }

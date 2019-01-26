@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DSPEditor"
         xmlns:svl="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
-        Title="DSPEditor" Height="524.717" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12">
+        Title="DSPEditor" Height="524.717" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12" WindowStyle="ThreeDBorderWindow">
     <Grid Background="#FF3F3F46" Opacity="0.95">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -356,8 +356,77 @@
                     </Image>
                 </Button>
             </WrapPanel>
-            <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="35" Margin="10,9.717,0.34,-0.34">
-                <Slider VerticalAlignment="Center" Maximum="1" Width="210" BorderBrush="#FF00FF18" Margin="10,12,0,0" Foreground="#FFFFF101" ValueChanged="SoundVolumeChanged" />
+            <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="34" Margin="15,9.566,21.34,0">
+                <Slider ValueChanged="ChangeVolume" x:Name="volume" Margin="0,5,0,0" Width="199" Height="24" Maximum="1" SmallChange="0.05" LargeChange="0.1" >
+                    <Slider.Resources>
+                        <Style TargetType="{x:Type Slider}">
+                            <Setter Property="Background" Value="Green"/>
+                            <Setter Property="Height" Value="20"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Slider}">
+                                        <ControlTemplate.Resources>
+                                            <Style TargetType="{x:Type RepeatButton}">
+                                                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                                                <Setter Property="IsTabStop" Value="false"/>
+                                                <Setter Property="Focusable" Value="false"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Border Background="{TemplateBinding Background}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                            <PathGeometry x:Key="Triangle">
+                                                <PathFigure StartPoint="0,1">
+                                                    <LineSegment Point="1,1"/>
+                                                    <LineSegment Point="1,0"/>
+                                                    <LineSegment Point="0,1"/>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </ControlTemplate.Resources>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.OpacityMask>
+                                                    <DrawingBrush>
+                                                        <DrawingBrush.Drawing>
+                                                            <GeometryDrawing Brush="Black" Geometry="{StaticResource Triangle}"/>
+                                                        </DrawingBrush.Drawing>
+                                                    </DrawingBrush>
+                                                </Grid.OpacityMask>
+                                                <Track Name="PART_Track" Value="{TemplateBinding Value}">
+                                                    <Track.Thumb>
+                                                        <Thumb Width="10" Background="{TemplateBinding Background}">
+                                                            <Thumb.Template>
+                                                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                                                    <Border Background="{TemplateBinding Background}"/>
+                                                                </ControlTemplate>
+                                                            </Thumb.Template>
+                                                        </Thumb>
+                                                    </Track.Thumb>
+                                                    <Track.DecreaseRepeatButton>
+                                                        <RepeatButton Background="{TemplateBinding Background}" Command="Slider.DecreaseLarge"/>
+                                                    </Track.DecreaseRepeatButton>
+                                                    <Track.IncreaseRepeatButton>
+                                                        <RepeatButton Background="Transparent" Command="Slider.IncreaseLarge"/>
+                                                    </Track.IncreaseRepeatButton>
+                                                </Track>
+                                            </Grid>
+                                            <Path
+                        Data="{StaticResource Triangle}"
+                        Stretch="Fill"
+                        Stroke="Black"
+                        StrokeThickness="1"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+
+                    </Slider.Resources>
+                </Slider>
             </WrapPanel>
         </Grid>
         <Grid

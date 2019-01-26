@@ -39,5 +39,9 @@ namespace DSPEditor.AudioItemBuilder
             return wavReader;
         }
 
+        public string GetFilePath()
+        {
+            return audioItem.FilePath;
+        }
     }
 }

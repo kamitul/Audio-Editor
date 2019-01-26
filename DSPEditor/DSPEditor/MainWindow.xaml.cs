@@ -30,12 +30,18 @@ namespace DSPEditor
 
         public static ProgressBar progressBar;
         public static WaveformTimeline waveFormTimeLine;
+        public static DigitalClock digitalClock;
+        public static TimeEditor startTime;
+        public static TimeEditor stopTime;
 
         public MainWindow()
         {
             InitializeComponent();
             progressBar = AlgoTime;
             waveFormTimeLine = waveform;
+            digitalClock = clockDisplay;
+            startTime = repeatStartTimeEdit;
+            stopTime = repeatStopTimeEdit;
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -51,6 +57,7 @@ namespace DSPEditor
 
         private void Close(object sender, RoutedEventArgs e)
         {
+            AudioItemManager.Instance.Dispose();
             Application.Current.Shutdown();  
         }
 
@@ -71,9 +78,18 @@ namespace DSPEditor
 
         private void ExportWAVFile(object sender, RoutedEventArgs e)
         {
-            using (WaveFileWriter writer = new WaveFileWriter("C:\\Users\\Kamil\\Source\\Repos\\JA_K.Tulczyjew_EdytorDzwiekow\\DSPEditor\\DSPEditor\\track1.wav", AudioItemManager.GetAudioItem().WaveFormat))
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = System.IO.Path.GetFileName(AudioItemManager.GetAudioItem().FilePath) + "processed"; // Default file name
+            saveFileDialog.DefaultExt = ".wav";
+            saveFileDialog.Filter = "Wav files (.wav)|*.wav"; 
+
+            if(saveFileDialog.ShowDialog() == true)
             {
-                writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                string filename = saveFileDialog.FileName;
+                using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
+                {
+                    writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                }
             }
 
         }
@@ -130,7 +146,7 @@ namespace DSPEditor
 
         private void MuteSample(object sender, RoutedEventArgs e)
         {
-            
+            AudioItemManager.Instance.MuteAudio();
         }
 
         private void StopSample(object sender, RoutedEventArgs e)
@@ -146,6 +162,14 @@ namespace DSPEditor
         private void PlaySample(object sender, RoutedEventArgs e)
         {
             AudioItemManager.Instance.PlayAudio();
+        }
+
+        private void ChangeVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = sender as Slider;
+            double value = slider.Value;
+
+            AudioItemManager.Instance.ChangeVolume(value);
         }
     }
 }

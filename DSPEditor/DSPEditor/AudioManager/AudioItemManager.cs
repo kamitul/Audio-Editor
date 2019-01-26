@@ -30,23 +30,21 @@ namespace DSPEditor.Audio
         {
             get
             {
-                lock (padlock)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new AudioItemManager();
-                    }
-                    return instance;
+                    instance = new AudioItemManager();
                 }
+                return instance;
+             
             }
         }
 
-        internal static void SetAudioItem(AudioItem value)
+        public static void SetAudioItem(AudioItem value)
         {
             ((AudioBuilder)audioItemBuilder).AudioItem = value;
         }
 
-        internal static AudioItem GetAudioItem()
+        public static AudioItem GetAudioItem()
         {
             return ((AudioBuilder)audioItemBuilder).AudioItem;
         }
@@ -89,7 +87,7 @@ namespace DSPEditor.Audio
             AudioType audioType = CheckFileExtension(Path.GetExtension(filePath));
             SetAudioType(audioType);
             SetFilePath(filePath);
-            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetWaveStream());
+            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetWaveStream(), audioItemBuilder.GetFilePath());
         }
 
         private AudioType CheckFileExtension(string fileExtension)
@@ -105,20 +103,38 @@ namespace DSPEditor.Audio
             }
         }
 
-        internal void PlayAudio()
+        public void PlayAudio()
         {
-            audioUIPlayer.Play();
+            if (audioUIPlayer.CanPlay)
+                audioUIPlayer.Play();
         }
 
-        internal void StopAudio()
+        public void StopAudio()
         {
-            audioUIPlayer.Stop();
-            
+            if (audioUIPlayer.CanStop)
+                audioUIPlayer.Stop();
         }
 
-        internal void PauseAudio()
+        public void PauseAudio()
         {
-            audioUIPlayer.Pause();
+            if (audioUIPlayer.CanPause)
+                audioUIPlayer.Pause();
         }
+
+        public void MuteAudio()
+        {
+            audioUIPlayer.Mute();
+        }
+
+        public void ChangeVolume(double value)
+        {
+            audioUIPlayer.ChangeVolume(value);
+        }
+
+        public void Dispose()
+        {
+            audioUIPlayer.Dispose();
+        }
+
     }
 }
