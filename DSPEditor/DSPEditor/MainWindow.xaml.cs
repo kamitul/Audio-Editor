@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using DSPEditor.Audio;
 using DSPEditor.AudioManager;
 using NAudio.Wave;
+using WPFSoundVisualizationLib;
 
 namespace DSPEditor
 {
@@ -28,11 +29,13 @@ namespace DSPEditor
     {
 
         public static ProgressBar progressBar;
+        public static WaveformTimeline waveFormTimeLine;
 
         public MainWindow()
         {
             InitializeComponent();
             progressBar = AlgoTime;
+            waveFormTimeLine = waveform;
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -127,22 +130,22 @@ namespace DSPEditor
 
         private void MuteSample(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void StopSample(object sender, RoutedEventArgs e)
         {
-
+            AudioItemManager.Instance.StopAudio();
         }
 
         private void PauseSample(object sender, RoutedEventArgs e)
         {
-
+            AudioItemManager.Instance.PauseAudio();
         }
 
         private void PlaySample(object sender, RoutedEventArgs e)
         {
-            
+            AudioItemManager.Instance.PlayAudio();
         }
     }
 }

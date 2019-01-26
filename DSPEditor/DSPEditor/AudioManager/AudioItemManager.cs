@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.IO;
+using DSPEditor.AudioManager;
 
 namespace DSPEditor.Audio
 {
@@ -20,6 +21,7 @@ namespace DSPEditor.Audio
     {
         private static AudioItemManager instance = null;
         private static readonly object padlock = new object();
+        private static AudioUIPlayer audioUIPlayer = new AudioUIPlayer();
 
 
         private static IAudioItemBuilder audioItemBuilder;
@@ -87,6 +89,7 @@ namespace DSPEditor.Audio
             AudioType audioType = CheckFileExtension(Path.GetExtension(filePath));
             SetAudioType(audioType);
             SetFilePath(filePath);
+            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetWaveStream());
         }
 
         private AudioType CheckFileExtension(string fileExtension)
@@ -100,6 +103,22 @@ namespace DSPEditor.Audio
                 default:
                     return AudioType.UNDEFINED;
             }
+        }
+
+        internal void PlayAudio()
+        {
+            audioUIPlayer.Play();
+        }
+
+        internal void StopAudio()
+        {
+            audioUIPlayer.Stop();
+            
+        }
+
+        internal void PauseAudio()
+        {
+            audioUIPlayer.Pause();
         }
     }
 }

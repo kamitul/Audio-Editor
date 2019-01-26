@@ -243,7 +243,7 @@ namespace DSPEditor.AudioManager
         }
 
         private void DistortionEffectWorkHandler(object sender, DoWorkEventArgs e)
-        {
+        { 
             SetMaxProgressBar();
 
             audioItem = AudioItemManager.GetAudioItem();
