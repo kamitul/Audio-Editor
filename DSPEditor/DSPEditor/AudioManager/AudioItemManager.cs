@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 using DSPEditor.AudioManager;
+using DSPEditor.Utility;
+using NAudio.Wave;
 
 namespace DSPEditor.Audio
 {
@@ -23,6 +25,9 @@ namespace DSPEditor.Audio
         private static readonly object padlock = new object();
         private static AudioUIPlayer audioUIPlayer = new AudioUIPlayer();
 
+        private OutputLogWriter outputLogWriter = new OutputLogWriter();
+
+        public static Action<string> WriteToOutputLog;
 
         private static IAudioItemBuilder audioItemBuilder;
 
@@ -41,16 +46,24 @@ namespace DSPEditor.Audio
 
         public static void SetAudioItem(AudioItem value)
         {
-            ((AudioBuilder)audioItemBuilder).AudioItem = value;
+            if (audioItemBuilder != null)
+                ((AudioBuilder)audioItemBuilder).AudioItem = value;
+            else
+                return;
+
         }
 
         public static AudioItem GetAudioItem()
         {
-            return ((AudioBuilder)audioItemBuilder).AudioItem;
+            if (audioItemBuilder != null)
+                return ((AudioBuilder)audioItemBuilder).AudioItem;
+            else
+                return null;
         }
 
         AudioItemManager()
         {
+            outputLogWriter.SubscribeToAudioItemEvent();
         }
 
         private void SetFilePath(string filePath)
@@ -88,6 +101,9 @@ namespace DSPEditor.Audio
             SetAudioType(audioType);
             SetFilePath(filePath);
             audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetWaveStream(), audioItemBuilder.GetFilePath());
+
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Initalized audio file: " + Path.GetFileName(filePath));
         }
 
         private AudioType CheckFileExtension(string fileExtension)
@@ -105,36 +121,96 @@ namespace DSPEditor.Audio
 
         public void PlayAudio()
         {
-            if (audioUIPlayer.CanPlay)
-                audioUIPlayer.Play();
+            if (audioUIPlayer != null)
+            {
+                if (audioUIPlayer.CanPlay)
+                {
+                    audioUIPlayer.Play();
+                    if (WriteToOutputLog != null)
+                        WriteToOutputLog("Playing audio!");
+                }
+                
+            }
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Audio not loaded!");
         }
 
         public void StopAudio()
         {
-            if (audioUIPlayer.CanStop)
-                audioUIPlayer.Stop();
+            if (audioUIPlayer != null)
+            {
+                if (audioUIPlayer.CanStop)
+                {
+                    audioUIPlayer.Stop();
+                    if (WriteToOutputLog != null)
+                        WriteToOutputLog("Stopped audio!");
+                }
+            }
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Audio not loaded!");
         }
 
         public void PauseAudio()
         {
-            if (audioUIPlayer.CanPause)
-                audioUIPlayer.Pause();
+            if (audioUIPlayer != null)
+            {
+                if (audioUIPlayer.CanPause)
+                {
+                    audioUIPlayer.Pause();
+                    if (WriteToOutputLog != null)
+                        WriteToOutputLog("Paused audio!");
+                }   
+            }
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Audio not loaded!");
         }
 
         public void MuteAudio()
         {
-            audioUIPlayer.Mute();
+            if (audioUIPlayer != null)
+            {
+                if (audioUIPlayer.CanMute)
+                {
+                    audioUIPlayer.Mute();
+                    if (WriteToOutputLog != null)
+                        WriteToOutputLog("Muted audio!");
+                }
+
+            }
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Audio not loaded!");
         }
 
         public void ChangeVolume(double value)
         {
-            audioUIPlayer.ChangeVolume(value);
+            if (audioUIPlayer != null)
+            {
+                audioUIPlayer.ChangeVolume(value);
+            }
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Audio not loaded!");
         }
 
         public void Dispose()
         {
             audioUIPlayer.Dispose();
+            if (WriteToOutputLog != null)
+                WriteToOutputLog("Disposed AudioUIPlayer!");
         }
 
+        public TimeSpan GetBeginSpan()
+        {
+            return audioUIPlayer.SelectionBegin;
+        }
+
+        public TimeSpan GetEndSpan()
+        {
+            return audioUIPlayer.SelectionEnd;
+        }
+
+        public WaveStream GetActiveStream()
+        {
+            return audioUIPlayer.ActiveStream;
+        }
     }
 }

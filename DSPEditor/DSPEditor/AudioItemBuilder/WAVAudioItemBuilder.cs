@@ -31,7 +31,6 @@ namespace DSPEditor.AudioItemBuilder
             audioItem.OriginalAudioBuffer = samples;
             audioItem.FilePath = filePath;
             audioItem.WaveFormat = reader.WaveFormat;
-            
         }
 
         public WaveFileReader GetWaveStream()

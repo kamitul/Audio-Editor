@@ -19,6 +19,7 @@ using DSPEditor.Audio;
 using DSPEditor.AudioManager;
 using NAudio.Wave;
 using WPFSoundVisualizationLib;
+using DSPEditor.Utility;
 
 namespace DSPEditor
 {
@@ -33,6 +34,8 @@ namespace DSPEditor
         public static DigitalClock digitalClock;
         public static TimeEditor startTime;
         public static TimeEditor stopTime;
+        public static TextBlock scrollViewerText;
+        public static ScrollViewer scrollViewerLog;
 
         public MainWindow()
         {
@@ -42,6 +45,8 @@ namespace DSPEditor
             digitalClock = clockDisplay;
             startTime = repeatStartTimeEdit;
             stopTime = repeatStopTimeEdit;
+            scrollViewerText = OutputLogText;
+            scrollViewerLog = OutputLog;
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -74,6 +79,20 @@ namespace DSPEditor
         private void ExportMP3File(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ExportOutputLog(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "outputlog"; // Default file name
+            saveFileDialog.DefaultExt = ".txt";
+            saveFileDialog.Filter = "Text files (.txt)|*.txt";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                OutputLogWriter.WriteOutputLogToFile(filePath);
+            }
         }
 
         private void ExportWAVFile(object sender, RoutedEventArgs e)

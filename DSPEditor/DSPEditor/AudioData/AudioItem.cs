@@ -8,7 +8,7 @@ using NAudio.Wave;
 namespace DSPEditor.Audio
 {
     [Serializable]
-    public struct AudioItem
+    public class AudioItem
     {
         private string filePath;
         private float[] processedAudioBuffer;
@@ -19,5 +19,6 @@ namespace DSPEditor.Audio
         public string FilePath { get => filePath; set => filePath = value; }
         public float[] OriginalAudioBuffer { get => originalAudioBuffer; set => originalAudioBuffer = value; }
         public WaveFormat WaveFormat { get => waveFormat; set => waveFormat = value; }
+
     }
 }

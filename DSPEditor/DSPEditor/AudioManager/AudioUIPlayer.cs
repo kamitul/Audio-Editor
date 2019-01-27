@@ -24,6 +24,7 @@ namespace DSPEditor.AudioManager
         private bool canPlay;
         private bool canPause;
         private bool canStop;
+        private bool canMute;
         private bool isPlaying;
         private double channelLength;
         private double channelPosition;
@@ -103,6 +104,8 @@ namespace DSPEditor.AudioManager
             {
                 Volume = 0.5f
             };
+
+ 
             inputStream = new WaveChannel32(inWaveStream);
             ActiveStream = inputStream;
             ChannelLength = inputStream.TotalTime.TotalSeconds;
@@ -247,14 +250,17 @@ namespace DSPEditor.AudioManager
 
         public void Mute()
         {
-            if (waveOutDevice.Volume > 0)
+            if (waveOutDevice != null)
             {
-                prevVolume = waveOutDevice.Volume;
-                waveOutDevice.Volume = 0;
-            }
-            else
-            {
-                waveOutDevice.Volume = (float)prevVolume;
+                if (waveOutDevice.Volume > 0)
+                {
+                    prevVolume = waveOutDevice.Volume;
+                    waveOutDevice.Volume = 0;
+                }
+                else
+                {
+                    waveOutDevice.Volume = (float)prevVolume;
+                }
             }
         }
 
@@ -268,6 +274,7 @@ namespace DSPEditor.AudioManager
             CanStop = false;
             CanPlay = true;
             CanPause = false;
+            CanMute = true;
         }
 
         public void Pause()
@@ -278,6 +285,7 @@ namespace DSPEditor.AudioManager
                 IsPlaying = false;
                 CanPlay = true;
                 CanPause = false;
+                CanMute = true;
             }
         }
 
@@ -290,6 +298,7 @@ namespace DSPEditor.AudioManager
                 CanPause = true;
                 CanPlay = false;
                 CanStop = true;
+                CanMute = true;
             }
         }
 
@@ -302,6 +311,18 @@ namespace DSPEditor.AudioManager
                 canPlay = value;
                 if (oldValue != canPlay)
                     NotifyPropertyChanged("CanPlay");
+            }
+        }
+
+        public bool CanMute
+        {
+            get { return canMute; }
+            protected set
+            {
+                bool oldValue = canMute;
+                canMute = value;
+                if (oldValue != canMute)
+                    NotifyPropertyChanged("CanMute");
             }
         }
 
