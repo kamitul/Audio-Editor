@@ -105,7 +105,7 @@ namespace DSPEditor.AudioManager
                 Volume = 0.5f
             };
 
- 
+
             inputStream = new WaveChannel32(inWaveStream);
             ActiveStream = inputStream;
             ChannelLength = inputStream.TotalTime.TotalSeconds;
@@ -225,16 +225,24 @@ namespace DSPEditor.AudioManager
             if (waveOutDevice != null)
             {
                 waveOutDevice.Stop();
+                waveOutDevice.Dispose();
             }
             if (activeStream != null)
             {
                 ActiveStream.Close();
+                ActiveStream.Dispose();
                 ActiveStream = null;
             }
             if (waveOutDevice != null)
             {
                 waveOutDevice.Dispose();
                 waveOutDevice = null;
+            }
+            if(inputStream != null)
+            {
+                inputStream.Close();
+                inputStream.Dispose();
+                inputStream = null;
             }
         }
         #endregion
@@ -373,6 +381,7 @@ namespace DSPEditor.AudioManager
             MainWindow.digitalClock.Time = TimeSpan.FromSeconds(ChannelPosition);
         }
         #endregion
+
 
         #region Waveform Generation
         private class WaveformGenerationParams

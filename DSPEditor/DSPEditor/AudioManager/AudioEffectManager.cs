@@ -6,6 +6,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,6 +27,9 @@ namespace DSPEditor.AudioManager
 
         private OutputLogWriter outputLogWriter = new OutputLogWriter();
         public static Action<string> WriteToOutputLog;
+
+        private MemoryStream memoryStream = new MemoryStream();
+        private WaveFileWriter waveFileWriter;
 
         public static AudioEffectManager Instance
         {
@@ -159,6 +163,11 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
+
                 AudioWahWahEffect.AutoWahInit(2000,  /*Effect rate 2000*/
                      16000, /*Sampling Frequency*/
                      1000,  /*Maximum frequency*/
@@ -167,11 +176,6 @@ namespace DSPEditor.AudioManager
                      0.707, /*Gain factor*/
                      10     /*Frequency increment*/);
 
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-                long beginIndex = (long)((AudioItemManager.Instance.GetBeginSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-                long endIndex = (long)((AudioItemManager.Instance.GetEndSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
 
                 for (long i = beginIndex; i < endIndex; ++i)
                 {
@@ -193,7 +197,7 @@ namespace DSPEditor.AudioManager
 
                 AudioItemManager.SetAudioItem(audioItem);
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Wah-Wah effect on audio sample!";
+                e.Result = "Selection : " + seconds + ":" + miliseconds + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Wah-Wah effect on audio sample!";
             }
             else
             {
@@ -212,14 +216,12 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
+
                 AudioTremoloEffect.TremoloInit(4000, 1);
-
-
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-                long beginIndex = (long)((AudioItemManager.Instance.GetBeginSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-                long endIndex = (long)((AudioItemManager.Instance.GetEndSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
 
                 for (long i = beginIndex; i < endIndex; ++i)
                 {
@@ -241,7 +243,7 @@ namespace DSPEditor.AudioManager
 
                 AudioItemManager.SetAudioItem(audioItem);
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Tremolo effect on audio sample!";
+                e.Result = "Selection : " + seconds + ":" + miliseconds + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Tremolo effect on audio sample!";
             }
             else
             {
@@ -257,16 +259,15 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
+                float[] samplesToProcess = SetDataForProcessing();
+
                 AudioSineWaveEffect.SineWaveInit(1000, 0.25f);
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
                 AudioSineWaveEffect.AddSineWave(samplesToProcess, audioItem.WaveFormat.SampleRate);
 
                 this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
                 {
                     MainWindow.progressBar.Value = 100; // Do all the ui thread updates here
-            }));
+                }));
 
                 audioItem.ProcessedAudioBuffer = samplesToProcess;
 
@@ -274,7 +275,7 @@ namespace DSPEditor.AudioManager
 
                 ResetProgressBar();
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed SineWave effect on audio sample!";
+                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetBeginSpan().Milliseconds.ToString() + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed SineWave effect on audio sample!";
             }
             else
             {
@@ -290,17 +291,15 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
+                float[] samplesToProcess = SetDataForProcessing();
+
                 AudioReverbEffect.ReverbInit(3000, 0.5f);
-
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
                 AudioReverbEffect.AddReverb(samplesToProcess);
 
                 this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
                 {
                     MainWindow.progressBar.Value = 100; // Do all the ui thread updates here
-            }));
+                }));
 
                 audioItem.ProcessedAudioBuffer = samplesToProcess;
 
@@ -308,7 +307,7 @@ namespace DSPEditor.AudioManager
 
                 ResetProgressBar();
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Reverb effect on audio sample!";
+                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetBeginSpan().Milliseconds.ToString() + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Reverb effect on audio sample!";
             }
             else
             {
@@ -316,6 +315,7 @@ namespace DSPEditor.AudioManager
             }
         }
 
+        
         private void DistortionEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
             audioItem = AudioItemManager.GetAudioItem();
@@ -324,12 +324,10 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-                long beginIndex = (long)((AudioItemManager.Instance.GetBeginSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-                long endIndex = (long)((AudioItemManager.Instance.GetEndSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
                 float biggest = samplesToProcess.Max();
 
                 AudioDistortionEffect.DistortionInit(biggest / 1.5f);
@@ -353,7 +351,7 @@ namespace DSPEditor.AudioManager
 
                 AudioItemManager.SetAudioItem(audioItem);
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Distortion effect on audio sample!";
+                e.Result = "Selection : " + seconds + ":" + miliseconds + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Distortion effect on audio sample!";
             }
             else
             {
@@ -369,16 +367,12 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
-                BackgroundWorker worker = sender as BackgroundWorker;
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
 
                 AudioDelayEffect.DelayInit(85.6, 0.7, 0.7, 1);
-
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-                long beginIndex = (long)((AudioItemManager.Instance.GetBeginSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-                long endIndex = (long)((AudioItemManager.Instance.GetEndSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-
                 for (long i = beginIndex; i < endIndex; ++i)
                 {
                     samplesToProcess[i] = AudioDelayEffect.DelayTask(samplesToProcess[i]);
@@ -398,7 +392,7 @@ namespace DSPEditor.AudioManager
 
                 AudioItemManager.SetAudioItem(audioItem);
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Delay effect on audio sample!";
+                e.Result = "Selection : " + seconds + ":" + miliseconds + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Delay effect on audio sample!";
             }
             else
             {
@@ -413,14 +407,12 @@ namespace DSPEditor.AudioManager
             if (audioItem != null)
             {
                 SetMaxProgressBar();
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
 
                 AudioFlangerEffect.FlangerInit(500, 16000, 70, 2, 0.3, 1, 0.3);
-
-
-                float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-                long beginIndex = (long)((AudioItemManager.Instance.GetBeginSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
-                long endIndex = (long)((AudioItemManager.Instance.GetEndSpan().Seconds / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
 
                 for (long i = beginIndex; i < endIndex; ++i)
                 {
@@ -442,12 +434,64 @@ namespace DSPEditor.AudioManager
 
                 AudioItemManager.SetAudioItem(audioItem);
 
-                e.Result = "Selection : " + AudioItemManager.Instance.GetBeginSpan().Seconds.ToString() + "-" + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + " " + " -> Processed Flanger effect on audio sample!";
+                e.Result = "Selection : " + seconds + ":" + miliseconds + " - " + AudioItemManager.Instance.GetEndSpan().Seconds.ToString() + ":" + AudioItemManager.Instance.GetEndSpan().Milliseconds.ToString() + "  " + " -> Processed Flanger effect on audio sample!";
             }
             else
             {
                 e.Result = "Audio not loaded!";
             }
+        }
+
+        private void SetDataForProcessing(out float[] samplesToProcess, out long beginIndex, out long endIndex, out int seconds, out int miliseconds)
+        {
+            samplesToProcess = new float[audioItem.OriginalAudioBuffer.Length];
+            if (audioItem.ProcessedAudioBuffer != null)
+            {
+                samplesToProcess = audioItem.ProcessedAudioBuffer;
+            }
+            else
+            {
+                samplesToProcess = audioItem.OriginalAudioBuffer;
+            }
+
+            if(AudioItemManager.Instance.GetBeginSpan().Seconds < 0)
+            {
+                seconds = 0;
+            }
+            else
+            {
+                seconds = AudioItemManager.Instance.GetBeginSpan().Seconds;
+            }
+
+            if (AudioItemManager.Instance.GetBeginSpan().Milliseconds < 0)
+            {
+                miliseconds = 0;
+            }
+            else
+            {
+                miliseconds = AudioItemManager.Instance.GetBeginSpan().Milliseconds;
+            }
+
+            beginIndex = (long)(((seconds + miliseconds/1000) / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
+            endIndex = (long)(((AudioItemManager.Instance.GetEndSpan().Seconds + AudioItemManager.Instance.GetEndSpan().Milliseconds/1000) / AudioItemManager.Instance.GetActiveStream().TotalTime.TotalSeconds) * AudioItemManager.Instance.GetActiveStream().Length);
+            beginIndex = (long)(beginIndex / 4);
+            endIndex = (long)(endIndex / 4);
+        }
+
+        private float[] SetDataForProcessing()
+        {
+            float[] samplesToProcess = new float[audioItem.OriginalAudioBuffer.Length];
+
+            if (audioItem.ProcessedAudioBuffer != null)
+            {
+                samplesToProcess = audioItem.ProcessedAudioBuffer;
+            }
+            else
+            {
+                samplesToProcess = audioItem.OriginalAudioBuffer;
+            }
+
+            return samplesToProcess;
         }
 
 

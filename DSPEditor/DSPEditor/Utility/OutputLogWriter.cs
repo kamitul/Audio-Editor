@@ -29,6 +29,11 @@ namespace DSPEditor.Utility
             AudioItemManager.WriteToOutputLog += WriteToOutputLog;
         }
 
+        public void SubscripeToOpeningClosingAudioEvents()
+        {
+            MainWindow.AudioFileOpenedExported += WriteToOutputLog;
+        }
+
         public void WriteToOutputLog(string log)
         {
             stringBuilder.Clear();

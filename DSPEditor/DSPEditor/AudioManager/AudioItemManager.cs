@@ -100,11 +100,12 @@ namespace DSPEditor.Audio
             AudioType audioType = CheckFileExtension(Path.GetExtension(filePath));
             SetAudioType(audioType);
             SetFilePath(filePath);
-            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetWaveStream(), audioItemBuilder.GetFilePath());
+            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetFileReader(), filePath);
 
             if (WriteToOutputLog != null)
                 WriteToOutputLog("Initalized audio file: " + Path.GetFileName(filePath));
         }
+
 
         private AudioType CheckFileExtension(string fileExtension)
         {
@@ -129,10 +130,13 @@ namespace DSPEditor.Audio
                     if (WriteToOutputLog != null)
                         WriteToOutputLog("Playing audio!");
                 }
-                
+
             }
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Audio not loaded!");
+            else
+            {
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Audio not loaded!");
+            }
         }
 
         public void StopAudio()
@@ -146,8 +150,11 @@ namespace DSPEditor.Audio
                         WriteToOutputLog("Stopped audio!");
                 }
             }
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Audio not loaded!");
+            else
+            {
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Audio not loaded!");
+            }
         }
 
         public void PauseAudio()
@@ -159,10 +166,13 @@ namespace DSPEditor.Audio
                     audioUIPlayer.Pause();
                     if (WriteToOutputLog != null)
                         WriteToOutputLog("Paused audio!");
-                }   
+                }
             }
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Audio not loaded!");
+            else
+            {
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Audio not loaded!");
+            }
         }
 
         public void MuteAudio()
@@ -177,8 +187,11 @@ namespace DSPEditor.Audio
                 }
 
             }
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Audio not loaded!");
+            else
+            {
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Audio not loaded!");
+            }
         }
 
         public void ChangeVolume(double value)
@@ -187,15 +200,21 @@ namespace DSPEditor.Audio
             {
                 audioUIPlayer.ChangeVolume(value);
             }
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Audio not loaded!");
+            else
+            {
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Audio not loaded!");
+            }
         }
 
         public void Dispose()
         {
-            audioUIPlayer.Dispose();
-            if (WriteToOutputLog != null)
-                WriteToOutputLog("Disposed AudioUIPlayer!");
+            if (audioUIPlayer != null)
+            {
+                audioUIPlayer.Dispose();
+                if (WriteToOutputLog != null)
+                    WriteToOutputLog("Disposed AudioUIPlayer!");
+            }
         }
 
         public TimeSpan GetBeginSpan()

@@ -468,12 +468,20 @@
         </Grid>
         <ProgressBar x:Name="AlgoTime" Height="25" Minimum="0" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
         <ScrollViewer HorizontalAlignment="Center" 
-                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" x:Name="OutputLog" Height="118" Margin="10,10,10,0" Grid.Row="4" VerticalAlignment="Top" Width="774" Grid.ColumnSpan="2" Background="#FFE7E7E7" VerticalContentAlignment="Center" CanContentScroll="True">
+                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" x:Name="OutputLog" Height="118" Margin="10,10,10,0" Grid.Row="4" VerticalAlignment="Top" Width="774" Grid.ColumnSpan="2" Background="#FFE7E7E7" VerticalContentAlignment="Center" CanContentScroll="True" MouseRightButtonDown="NullText">
+            
             <TextBlock x:Name="OutputLogText" HorizontalAlignment="Center" VerticalAlignment="Stretch" MinWidth="100" Width="742"
             TextWrapping="WrapWithOverflow" FontSize="16" TextTrimming="WordEllipsis" />
+            
         </ScrollViewer>
     </Grid>
 
+
+    <Window.Resources>
+        <ContextMenu x:Key="ClearLog">
+            <MenuItem Header="Clear" Click="ClearLog"/>
+        </ContextMenu>
+    </Window.Resources>
 </Window>
 
     

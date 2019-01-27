@@ -37,6 +37,10 @@ namespace DSPEditor
         public static TextBlock scrollViewerText;
         public static ScrollViewer scrollViewerLog;
 
+        private OutputLogWriter outputLogWriter = new OutputLogWriter();
+
+        public static Action<string> AudioFileOpenedExported;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +51,8 @@ namespace DSPEditor
             stopTime = repeatStopTimeEdit;
             scrollViewerText = OutputLogText;
             scrollViewerLog = OutputLog;
+
+            outputLogWriter.SubscripeToOpeningClosingAudioEvents();
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -57,6 +63,11 @@ namespace DSPEditor
             if (openFileDialog.ShowDialog() == true)
             {
                 AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
+            }
+            if(AudioFileOpenedExported != null)
+            {
+                if(openFileDialog.FileName != null)
+                    AudioFileOpenedExported("Audio file opened!");
             }
         }
 
@@ -92,6 +103,11 @@ namespace DSPEditor
             {
                 string filePath = saveFileDialog.FileName;
                 OutputLogWriter.WriteOutputLogToFile(filePath);
+                if (AudioFileOpenedExported != null)
+                {
+                    if(filePath != null)
+                        AudioFileOpenedExported("Exported output log to: " + filePath);
+                }
             }
         }
 
@@ -108,6 +124,10 @@ namespace DSPEditor
                 using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
                 {
                     writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                }
+                if (AudioFileOpenedExported != null)
+                {
+                    AudioFileOpenedExported("Exported edited audio file, filePath: " + filename);
                 }
             }
 
@@ -189,6 +209,18 @@ namespace DSPEditor
             double value = slider.Value;
 
             AudioItemManager.Instance.ChangeVolume(value);
+        }
+
+        private void NullText(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu cm = this.FindResource("ClearLog") as ContextMenu;
+            cm.PlacementTarget = sender as ScrollViewer;
+            cm.IsOpen = true;
+        }
+
+        private void ClearLog(object sender, RoutedEventArgs e)
+        {
+            OutputLogText.Text = "";
         }
     }
 }
