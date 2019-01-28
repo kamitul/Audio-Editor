@@ -16,7 +16,7 @@ extern "C" __declspec(dllexport) float DistortionProcess(float in_value) {
 		out = max_value_dist * 1.5;
 	}
 	else if (in_value * 1000 < min_value_dist) {
-		out = max_value_dist * 1.5;
+		out = min_value_dist * 1.5;
 	}
 	else {
 		out = in_value;

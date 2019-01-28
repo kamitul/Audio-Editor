@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DSPEditor"
         xmlns:svl="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
-        Title="DSPEditor" Height="524.717" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12" WindowStyle="ThreeDBorderWindow">
+        Title="DSPEditor" Height="594" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12" WindowStyle="ThreeDBorderWindow">
     <Grid Background="#FF3F3F46" Opacity="0.95">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -59,305 +59,314 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height = "*" />
-                <RowDefinition Height = "*" />
+                <RowDefinition Height = "75*" />
+                <RowDefinition Height = "32*" />
             </Grid.RowDefinitions>
-            <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="70" Margin="15,10,0.34,0" Grid.RowSpan="2">
-                <Button x:Name="PlayButton" Width="45"
+            <GroupBox BorderBrush="Black" Margin="0,9,10,3.17" HorizontalAlignment="Right" Width="220" Height="57">
+                <WrapPanel Grid.Row = "0" VerticalAlignment="Top" Height="53" Margin="-5,5,-5.698,-5.943" Grid.RowSpan="2" RenderTransformOrigin="0.69,0.372" HorizontalAlignment="Left" Width="214">
+                    <Button x:Name="PlayButton" Width="45"
         Height="45" Margin="8,0,5,0" Click="PlaySample">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Stroke="Black"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="Black"
                          StrokeThickness="3">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop x:Name="gradientPlay1" Offset="1"
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop x:Name="gradientPlay1" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientPlay2" Offset="1"
+                                                <GradientStop x:Name="gradientPlay2" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientPlay3" Offset="1"
+                                                <GradientStop x:Name="gradientPlay3" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <RadialGradientBrush.Transform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleY="0.65" />
-                                                </TransformGroup>
-                                            </RadialGradientBrush.Transform>
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.MouseEnter">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             From="1.0" To="0.5" Duration="0:0:0.5" AutoReverse="True"
                                             RepeatBehavior="Forever" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseLeave">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To="1" Duration="0:0:0.1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation 
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To = "1" Duration="0:0:0.05"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Image Source="play.png" Height="102" Width="84" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </Button>
-                <Button x:Name="PauseButton" Width="45"
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Image Source="play.png" Height="102" Width="84" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </Button>
+                    <Button x:Name="PauseButton" Width="45"
         Height="45" Margin="0,0,5,0" Click="PauseSample">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Stroke="Black"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="Black"
                          StrokeThickness="3">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop x:Name="gradientPause1" Offset="1"
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop x:Name="gradientPause1" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientPause2" Offset="1"
+                                                <GradientStop x:Name="gradientPause2" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientPause3" Offset="1"
+                                                <GradientStop x:Name="gradientPause3" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <RadialGradientBrush.Transform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleY="0.65" />
-                                                </TransformGroup>
-                                            </RadialGradientBrush.Transform>
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.MouseEnter">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             From="1.0" To="0.5" Duration="0:0:0.5" AutoReverse="True"
                                             RepeatBehavior="Forever" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseLeave">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To="1" Duration="0:0:0.1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation 
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                            To = "1" Duration="0:0:0.05"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Image Source="pause.png" Height="104" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </Button>
-                <Button x:Name="StopButton" Width="45"
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Image Source="pause.png" Height="104" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </Button>
+                    <Button x:Name="StopButton" Width="45"
         Height="45" Margin="0,0,5,0" Click="StopSample">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Stroke="Black"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="Black"
                          StrokeThickness="3">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop x:Name="gradientStop1" Offset="1"
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop x:Name="gradientStop1" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientStop2" Offset="1"
+                                                <GradientStop x:Name="gradientStop2" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientStop3" Offset="1"
+                                                <GradientStop x:Name="gradientStop3" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <RadialGradientBrush.Transform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleY="0.65" />
-                                                </TransformGroup>
-                                            </RadialGradientBrush.Transform>
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.MouseEnter">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             From="1.0" To="0.5" Duration="0:0:0.5" AutoReverse="True"
                                             RepeatBehavior="Forever" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseLeave">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To="1" Duration="0:0:0.1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation 
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To = "1" Duration="0:0:0.05"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Image Source="stop.png" Height="159" Width="95" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </Button>
-                <Button x:Name="MuteButton" Width="45"
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Image Source="stop.png" Height="159" Width="95" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="0.5" ScaleX="0.7"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </Button>
+                    <Button x:Name="MuteButton" Width="45"
         Height="45" Margin="5,0,0,0" Click="MuteSample">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Stroke="#FF1CFF00"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Stroke="#FF1CFF00"
                          StrokeThickness="3">
-                                    <Ellipse.Fill>
-                                        <RadialGradientBrush>
-                                            <GradientStop x:Name="gradientMute1" Offset="1"
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop x:Name="gradientMute1" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientMute2" Offset="1"
+                                                <GradientStop x:Name="gradientMute2" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <GradientStop x:Name="gradientMute3" Offset="1"
+                                                <GradientStop x:Name="gradientMute3" Offset="1"
                                           Color="#FFFEDF16" />
-                                            <RadialGradientBrush.Transform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleY="0.65" />
-                                                </TransformGroup>
-                                            </RadialGradientBrush.Transform>
-                                        </RadialGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <ContentPresenter HorizontalAlignment="Center"
+                                                <RadialGradientBrush.Transform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleY="0.65" />
+                                                    </TransformGroup>
+                                                </RadialGradientBrush.Transform>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.MouseEnter">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             From="1.0" To="0.6" Duration="0:0:0.1" AutoReverse="True"
                                             RepeatBehavior="Forever" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseLeave">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To="1" Duration="0:0:0.05" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation 
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
                                             Storyboard.TargetProperty="(Button.Opacity)"
                                             To = "1.0" Duration="0:0:0.05"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Image Source="mute.png" Height="25" Width="29" RenderTransformOrigin="0.219,0.491" IsHitTestVisible="False">
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Image Source="mute.png" Height="25" Width="29" RenderTransformOrigin="0.219,0.491" IsHitTestVisible="False">
 
-                    </Image>
-                </Button>
-            </WrapPanel>
-            <WrapPanel Grid.Row = "1" VerticalAlignment="Top" Height="34" Margin="15,9.566,21.34,0">
+                        </Image>
+                    </Button>
+                </WrapPanel>
+            </GroupBox>
+
+        </Grid>
+        <Grid
+              Grid.Column="0" Margin="0,18,0.453,179.962" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Row = "1" VerticalAlignment="Center" Height="34" Margin="15,9.566,21.34,0" HorizontalAlignment="Center">
                 <Slider ValueChanged="ChangeVolume" x:Name="volume" Margin="0,5,0,0" Width="199" Height="24" Maximum="1" SmallChange="0.05" LargeChange="0.1" >
                     <Slider.Resources>
                         <Style TargetType="{x:Type Slider}">
@@ -430,15 +439,6 @@
                 </Slider>
             </WrapPanel>
         </Grid>
-        <Grid
-              Grid.Column="0" Margin="0,18,0.453,179.962" Grid.RowSpan="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <svl:SpectrumAnalyzer x:Name="spectrumAnalyzer"
-                                  Margin="10,10,25.453,9.528"
-                                  BarCount="16" />
-        </Grid>
         <svl:DigitalClock Grid.Row="1"
                           x:Name="clockDisplay"
                           ShowHours="False"
@@ -468,11 +468,11 @@
         </Grid>
         <ProgressBar x:Name="AlgoTime" Height="25" Minimum="0" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
         <ScrollViewer HorizontalAlignment="Center" 
-                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" x:Name="OutputLog" Height="118" Margin="10,10,10,0" Grid.Row="4" VerticalAlignment="Top" Width="774" Grid.ColumnSpan="2" Background="#FFE7E7E7" VerticalContentAlignment="Center" CanContentScroll="True" MouseRightButtonDown="NullText">
-            
+                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" x:Name="OutputLog" Height="183" Margin="10,9.604,10.264,-64.906" Grid.Row="4" VerticalAlignment="Top" Width="774" Grid.ColumnSpan="2" Background="#FFE7E7E7" VerticalContentAlignment="Center" CanContentScroll="True" MouseRightButtonDown="NullText">
+
             <TextBlock x:Name="OutputLogText" HorizontalAlignment="Center" VerticalAlignment="Stretch" MinWidth="100" Width="742"
             TextWrapping="WrapWithOverflow" FontSize="16" TextTrimming="WordEllipsis" />
-            
+
         </ScrollViewer>
     </Grid>
 

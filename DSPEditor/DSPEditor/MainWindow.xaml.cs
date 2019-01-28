@@ -114,20 +114,30 @@ namespace DSPEditor
         private void ExportWAVFile(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = System.IO.Path.GetFileName(AudioItemManager.GetAudioItem().FilePath) + "processed"; // Default file name
-            saveFileDialog.DefaultExt = ".wav";
-            saveFileDialog.Filter = "Wav files (.wav)|*.wav"; 
+            var audioItem = AudioItemManager.GetAudioItem();
+            if (audioItem != null) {
+                saveFileDialog.FileName = System.IO.Path.GetFileName(audioItem.FilePath) + "processed"; // Default file name
+                saveFileDialog.DefaultExt = ".wav";
+                saveFileDialog.Filter = "Wav files (.wav)|*.wav";
 
-            if(saveFileDialog.ShowDialog() == true)
-            {
-                string filename = saveFileDialog.FileName;
-                using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                    string filename = saveFileDialog.FileName;
+                    using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
+                    {
+                        writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                    }
+                    if (AudioFileOpenedExported != null)
+                    {
+                        AudioFileOpenedExported("Exported edited audio file, filePath: " + filename);
+                    }
                 }
+            }
+            else
+            {
                 if (AudioFileOpenedExported != null)
                 {
-                    AudioFileOpenedExported("Exported edited audio file, filePath: " + filename);
+                    AudioFileOpenedExported("Cannot export empty file!");
                 }
             }
 

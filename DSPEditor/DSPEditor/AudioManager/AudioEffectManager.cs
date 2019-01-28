@@ -259,10 +259,16 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
-                float[] samplesToProcess = SetDataForProcessing();
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioSineWaveEffect.SineWaveInit(1000, 0.25f);
-                AudioSineWaveEffect.AddSineWave(samplesToProcess, audioItem.WaveFormat.SampleRate);
+                int begIndex = (int)beginIndex;
+                int enIndex = (int)endIndex;
+
+                AudioSineWaveEffect.SineWaveInit(100, 0.2f);
+                AudioSineWaveEffect.AddSineWave(samplesToProcess, audioItem.WaveFormat.SampleRate, begIndex, enIndex);
 
                 this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
                 {
@@ -291,10 +297,17 @@ namespace DSPEditor.AudioManager
             {
                 SetMaxProgressBar();
 
-                float[] samplesToProcess = SetDataForProcessing();
+                float[] samplesToProcess;
+                long beginIndex, endIndex;
+                int seconds, miliseconds;
+                SetDataForProcessing(out samplesToProcess, out beginIndex, out endIndex, out seconds, out miliseconds);
 
                 AudioReverbEffect.ReverbInit(3000, 0.5f);
-                AudioReverbEffect.AddReverb(samplesToProcess);
+
+                int begIndex = (int)beginIndex;
+                int enIndex = (int)endIndex;
+
+                AudioReverbEffect.AddReverb(samplesToProcess, begIndex, enIndex);
 
                 this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
                 {

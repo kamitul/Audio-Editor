@@ -12,10 +12,10 @@ extern "C" __declspec(dllexport) void SineWaveInit(int freq, int amp) {
 	amplitude = amp;    
 }
 
-extern "C" __declspec(dllexport) void SineWaveProcess(float* buffer, int sampleCount, int sampleRate) {
+extern "C" __declspec(dllexport) void SineWaveProcess(float* buffer, int sampleCount, int sampleRate, int begin_index, int end_index) {
 
-	int offset = sampleCount / 2;
-	for (int n = 0; n < sampleCount - offset; n++)
+	int offset = (end_index - begin_index) / 2;
+	for (int n = begin_index - offset; n < end_index - offset; n++)
 	{
 		buffer[n + offset] = (float)(amplitude * sin((2 * 3.14 * sample * frequency) / sampleRate));
 		sample++;

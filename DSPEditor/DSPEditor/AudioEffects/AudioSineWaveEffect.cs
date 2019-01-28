@@ -13,13 +13,13 @@ namespace DSPEditor.AudioEffects
         public static extern void SineWaveInit(int freq, float amp);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern float SineWaveProcess(IntPtr tab, int sampleCount, int sampleRate);
+        private static extern void SineWaveProcess(IntPtr tab, int sampleCount, int sampleRate, int begin_index, int end_index);
 
-        public static unsafe void AddSineWave(float[] samples, int sampleRate)
+        public static unsafe void AddSineWave(float[] samples, int sampleRate, int begin_index, int end_index)
         {
             fixed (float* p = samples)
             {
-                SineWaveProcess((IntPtr)p, samples.Length, sampleRate);
+                SineWaveProcess((IntPtr)p, samples.Length, sampleRate, begin_index, end_index);
             }
         }
     }

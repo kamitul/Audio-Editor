@@ -277,6 +277,7 @@ namespace DSPEditor.AudioManager
             if (waveOutDevice != null)
             {
                 waveOutDevice.Stop();
+                ChannelPosition = 0;
             }
             IsPlaying = false;
             CanStop = false;

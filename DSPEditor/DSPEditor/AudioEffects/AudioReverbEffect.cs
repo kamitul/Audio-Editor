@@ -13,13 +13,13 @@ namespace DSPEditor.DSPAudioEffects
         public static extern void ReverbInit(int delay, float _decay);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern float ReverbProcess(IntPtr tab, int length);
+        private static extern void ReverbProcess(IntPtr tab, int length, int begin_index, int end_index);
 
-        public static unsafe void AddReverb(float[] samples)
+        public static unsafe void AddReverb(float[] samples, int begin_index, int end_index)
         {
             fixed (float* p = samples)
             {
-                ReverbProcess((IntPtr)p, samples.Length);
+                ReverbProcess((IntPtr)p, samples.Length, begin_index, end_index);
             }
         }
     }
