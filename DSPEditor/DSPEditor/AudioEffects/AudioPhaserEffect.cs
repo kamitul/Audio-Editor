@@ -13,7 +13,7 @@ namespace DSPEditor.AudioEffects
         public static extern void PhaserInit(double rateParam, double widthParam);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float PhaserProcess(float inval);
+        public static extern float PhaserProcess(float inval, ref int time_elapsed);
 
     }
 }

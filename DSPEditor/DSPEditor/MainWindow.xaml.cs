@@ -62,13 +62,26 @@ namespace DSPEditor
             openFileDialog.InitialDirectory = @"c:\";
             if (openFileDialog.ShowDialog() == true)
             {
-                AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
+                if(openFileDialog.FileName == "")
+                {
+                    if (AudioFileOpenedExported != null)
+                    {
+                        AudioFileOpenedExported("Audio file not opened!");
+                    }
+                }
+                else
+                {
+                    AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
+                }
             }
-            if(AudioFileOpenedExported != null)
+            else
             {
-                if(openFileDialog.FileName != null)
-                    AudioFileOpenedExported("Audio file opened!");
+                if (AudioFileOpenedExported != null)
+                {
+                    AudioFileOpenedExported("Audio file not opened!");
+                }
             }
+           
         }
 
         private void Close(object sender, RoutedEventArgs e)
@@ -145,52 +158,56 @@ namespace DSPEditor
 
         private void FlangerSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddFlangerEffect();
         }
 
         private void TremoloSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddTremoloEffect();
         }
 
         private void ChorusSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddChorusEffect();
         }
 
-        private void EchoSample(object sender, RoutedEventArgs e)
+        private void DelaySample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddDelayEffect();
         }
 
         private void ReverbSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddReverbEffect();
         }
 
         private void WahWahSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddWahWahEffect();
         }
 
         private void PhaserSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddPhaserEffect();
         }
 
         private void SineWaveSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddSineWaveEffect();
         }
 
         private void DistortionSample(object sender, RoutedEventArgs e)
         {
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddDistortionEffect();
-        }
-
-        private void SoundVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
         }
 
         private void MuteSample(object sender, RoutedEventArgs e)

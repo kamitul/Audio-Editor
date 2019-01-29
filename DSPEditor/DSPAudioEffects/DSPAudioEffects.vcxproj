@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="AudioBIIPEffect.h" />
     <ClInclude Include="AudioDelayEffect.h" />
+    <ClInclude Include="AudioLineDelayEffect.h" />
     <ClInclude Include="AudioDistortionEffect.h" />
     <ClInclude Include="AudioFlangerEffect.h" />
     <ClInclude Include="AudioReverbEffect.h" />

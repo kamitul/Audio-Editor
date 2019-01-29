@@ -13,6 +13,6 @@ namespace DSPEditor.AudioEffects
         public static extern void DistortionInit(float max);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float DistortionProcess(float in_value);
+        public static extern float DistortionProcess(float in_value, ref int time_elapsed);
     }
 }

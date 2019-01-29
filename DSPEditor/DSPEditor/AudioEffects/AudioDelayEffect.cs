@@ -10,9 +10,9 @@ namespace DSPEditor.AudioEffects
     class AudioDelayEffect
     {
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void DelayInit(double delay_samples, double dfb, double dfw, double dmix);
+        public static extern void DelayInit();
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float DelayTask(float xin);
+        public static extern float DelayProcess(float in_sample, ref int time_elapsed);
     }
 }

@@ -40,7 +40,7 @@ namespace DSPEditor.Utility
             stringBuilder.Append("---------------------------------------------------------------LOG--------------------------------------------------------------");
             stringBuilder.Append("\n");
             stringBuilder.Append("");
-            stringBuilder.Append("Time : " + DateTime.Now.ToString());
+            stringBuilder.Append("Log time : " + DateTime.Now.ToString());
             stringBuilder.Append("\n");
             stringBuilder.Append(log);
             stringBuilder.Append("\n");

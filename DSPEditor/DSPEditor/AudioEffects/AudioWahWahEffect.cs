@@ -13,7 +13,7 @@ namespace DSPEditor.AudioEffects
         public static extern void AutoWahInit(short effect_rate, short sampling, short maxf, short minf, short Q, double gainfactor, short freq_step);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern float AutoWahProcess(float xin);
+        public static extern float AutoWahProcess(float xin, ref int time_elapsed);
 
         [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void AutoWahSweep();

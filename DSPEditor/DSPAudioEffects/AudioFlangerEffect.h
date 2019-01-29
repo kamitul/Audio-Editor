@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "AudioDelayEffect.h"
+#include "AudioLineDelayEffect.h"
 
 
 static short flanger_samp_freq;
@@ -15,7 +15,7 @@ static double mix_vol;
 static double delay_step;
 
 extern "C" __declspec(dllexport) void FlangerInit(short effect_rate, short sampling, short maxd, short mind, double fwv, double stepd, double fbv) {
-	DelayInit(2, fbv, fwv, 1);
+	LineDelayInit(2, fbv, fwv, 1);
 
 	flanger_samp_freq = sampling;
 	flanger_counter = effect_rate;
@@ -31,10 +31,19 @@ extern "C" __declspec(dllexport) void FlangerInit(short effect_rate, short sampl
 }
 
 
-extern "C" __declspec(dllexport) float FlangerProcess(float xin) {
+extern "C" __declspec(dllexport) float FlangerProcess(float xin, int *time_elapsed) {
+
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
 	float yout;
 
-	yout = DelayTask(xin);
+	yout = LineDelayTask(xin);
+
+	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+
+	*time_elapsed = duration;
+
 	return yout;
 }
 

@@ -30,13 +30,21 @@ extern "C" __declspec(dllexport) void  AutoWahInit(short effect_rate, short samp
 }
 
 
-extern "C" __declspec(dllexport) float  AutoWahProcess(float xin) {
+extern "C" __declspec(dllexport) float  AutoWahProcess(float xin, int *time_elapsed) {
+
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
 	float yout;
 
 	yout = bp_iir_filter(xin, &HWah);
 #ifdef INPUT_UNSIGNED
 	yout += 32767;
 #endif
+
+	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+
+	*time_elapsed = duration;
 
 	return yout;
 }

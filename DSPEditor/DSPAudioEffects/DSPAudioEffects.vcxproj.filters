@@ -24,9 +24,6 @@
     <ClInclude Include="AudioFlangerEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AudioDelayEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AudioTremoloEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,6 +40,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AudioDistortionEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioLineDelayEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioDelayEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,10 @@
 ﻿<Window x:Class="DSPEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:DSPEditor"
         xmlns:svl="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
@@ -38,7 +40,7 @@
                     <MenuItem Header="_Tremolo" Click="TremoloSample"/>
                 </MenuItem>
                 <MenuItem Header="_Time-based effects">
-                    <MenuItem Header="_Echo" Click="EchoSample"/>
+                    <MenuItem Header="_Delay" Click="DelaySample"/>
                     <MenuItem Header="_Reverb" Click="ReverbSample"/>
                 </MenuItem>
                 <MenuItem Header="_Custom">
@@ -367,7 +369,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <WrapPanel Grid.Row = "1" VerticalAlignment="Center" Height="34" Margin="15,9.566,21.34,0" HorizontalAlignment="Center">
-                <Slider ValueChanged="ChangeVolume" x:Name="volume" Margin="0,5,0,0" Width="199" Height="24" Maximum="1" SmallChange="0.05" LargeChange="0.1" >
+                <Slider ValueChanged="ChangeVolume" x:Name="volume" Margin="0,5,0,0" Width="199" Height="24" Maximum="1" SmallChange="0.05" LargeChange="0.1" VerticalAlignment="Top" Value="-1" >
                     <Slider.Resources>
                         <Style TargetType="{x:Type Slider}">
                             <Setter Property="Background" Value="Green"/>
@@ -388,13 +390,7 @@
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
-                                            <PathGeometry x:Key="Triangle">
-                                                <PathFigure StartPoint="0,1">
-                                                    <LineSegment Point="1,1"/>
-                                                    <LineSegment Point="1,0"/>
-                                                    <LineSegment Point="0,1"/>
-                                                </PathFigure>
-                                            </PathGeometry>
+                                            <PathGeometry x:Key="Triangle" Figures="M0,1 L1,1 L1,0 L0,1"/>
                                         </ControlTemplate.Resources>
                                         <Grid>
                                             <Grid>
@@ -405,7 +401,7 @@
                                                         </DrawingBrush.Drawing>
                                                     </DrawingBrush>
                                                 </Grid.OpacityMask>
-                                                <Track Name="PART_Track" Value="{TemplateBinding Value}">
+                                                <Track x:Name="PART_Track" Value="{TemplateBinding Value}">
                                                     <Track.Thumb>
                                                         <Thumb Width="10" Background="{TemplateBinding Background}">
                                                             <Thumb.Template>
@@ -456,14 +452,18 @@
                                   Margin="10,5,4.641,-0.094"
                                   BorderThickness="1" Background="#FF49494F" BorderBrush="#FF49B845" Grid.ColumnSpan="2" />
             <StackPanel Orientation="Vertical"
-                        VerticalAlignment="Center"
-                        Grid.Column="2" Margin="0.359,52,0.264,50.906">
-                <svl:TimeEditor Margin="5,5,10,5"
+                        VerticalAlignment="Bottom"
+                        Grid.Column="2" Margin="0.358,0,0.264,-0.094" Height="170">
+                <svl:TimeEditor Margin="0,6,6,5"
                                 Name="repeatStartTimeEdit"
-                                IsReadOnly="True" Background="#FF38383B" Foreground="#FF4AC044" BorderBrush="#FF4E9447" CaretBrush="#FF4E9447" />
-                <svl:TimeEditor Margin="5,5,10,5"
+                                IsReadOnly="True" Background="#FF38383B" Foreground="#FF4AC044" BorderBrush="#FF4E9447" CaretBrush="#FF4E9447" HorizontalAlignment="Right" Width="89" />
+                <svl:TimeEditor Margin="0,5,6,5"
                                 Name="repeatStopTimeEdit"
-                                IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" />
+                                IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" HorizontalAlignment="Right" Width="89" />
+
+                <Label Content="Threads count" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,30,6,0" />
+                <toolkit:IntegerUpDown x:Name="ThreadsValue" Value="0" Increment="1" Minimum="0" Maximum="3000" Margin="5,0,10,0" Text="0"/>
+                
             </StackPanel>
         </Grid>
         <ProgressBar x:Name="AlgoTime" Height="25" Minimum="0" Margin="10,10,10.264,0" Grid.Row="3" VerticalAlignment="Center" Width="774" HorizontalAlignment="Center" Grid.ColumnSpan="2" />
