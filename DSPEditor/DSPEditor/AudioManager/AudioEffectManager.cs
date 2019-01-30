@@ -102,38 +102,46 @@ namespace DSPEditor.AudioManager
             }));
         }
 
-        public void AddDelayEffect()
+        public void AddDelayEffect(params object[] list)
         {
+            List<object> passParams = list.ToList();
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[0];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
 
-        public void AddFlangerEffect()
+        public void AddFlangerEffect(params object[] list)
         {
+            List<object> passParams = list.ToList();
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[6];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
 
-        public void AddTremoloEffect()
+        public void AddTremoloEffect(params object[] list)
         {
+            List<object> passParams = list.ToList();
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[4];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
-        public void AddReverbEffect()
+        public void AddReverbEffect(params object[] list)
         {
+            List<object> passParams = list.ToList();
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[2];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
         public void AddDistortionEffect()
@@ -144,20 +152,26 @@ namespace DSPEditor.AudioManager
             worker.RunWorkerAsync();
         }
 
-        public void AddWahWahEffect()
+        public void AddWahWahEffect(params object[] list)
         {
+            List<object> passParams = list.ToList();
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[5];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
-        public void AddSineWaveEffect()
+        public void AddSineWaveEffect(int freq, double ampl)
         {
+            List<object> passParams = new List<object>();
+            passParams.Add(freq);
+            passParams.Add(ampl);
+
             DisablePreviousWorks();
             stopWatch = Stopwatch.StartNew();
             worker.DoWork += doWorkEventHandlers[3];
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(passParams);
         }
 
         private void DisablePreviousWorks()
@@ -170,6 +184,14 @@ namespace DSPEditor.AudioManager
 
         private void WahWahEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            int effectRate = (int)passedParams[0];
+            int maxF = (int)passedParams[1];
+            int minF = (int)passedParams[2];
+            int Q = (int)passedParams[3];
+            double gainFactor = (double)passedParams[4];
+
+
             audioItem = AudioItemManager.GetAudioItem();
 
             if (audioItem != null)
@@ -183,13 +205,14 @@ namespace DSPEditor.AudioManager
                 int fullTime = 0;
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioWahWahEffect.AutoWahInit(2000,  /*Effect rate 2000*/
+                AudioWahWahEffect.AutoWahInit((short)effectRate,  /*Effect rate 2000*/
                      16000, /*Sampling Frequency*/
-                     1000,  /*Maximum frequency*/
-                     500,   /*Minimum frequency*/
-                     4,     /*Q*/
-                     0.707, /*Gain factor*/
+                     (short)maxF,  /*Maximum frequency*/
+                     (short)minF,   /*Minimum frequency*/
+                     (short)Q,     /*Q*/
+                     gainFactor, /*Gain factor*/
                      10     /*Frequency increment*/);
+
                 AudioWahWahEffect.AutoWahSweep();
 
 
@@ -269,6 +292,10 @@ namespace DSPEditor.AudioManager
 
         private void TremoloWaveEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            int effectRate = (int)passedParams[0];
+            double depthRate = (double)passedParams[1];
+
             this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 audioItem = AudioItemManager.GetAudioItem();
@@ -285,7 +312,7 @@ namespace DSPEditor.AudioManager
                 int fullTime = 0;
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioTremoloEffect.TremoloInit(2000, 0.8);
+                AudioTremoloEffect.TremoloInit((short)effectRate, depthRate);
 
                 if (threadsValue > 1)
                 {
@@ -362,6 +389,10 @@ namespace DSPEditor.AudioManager
 
         private void SineWaveEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            int freq = (int)passedParams[0];
+            double ampl = (double)passedParams[1];
+
             audioItem = AudioItemManager.GetAudioItem();
 
             if (audioItem != null)
@@ -377,7 +408,7 @@ namespace DSPEditor.AudioManager
                 int begIndex = (int)beginIndex;
                 int enIndex = (int)endIndex;
 
-                AudioSineWaveEffect.SineWaveInit(100, 0.2f);
+                AudioSineWaveEffect.SineWaveInit((short)freq, (float)ampl);
                 AudioSineWaveEffect.AddSineWave(samplesToProcess, audioItem.WaveFormat.SampleRate, begIndex, enIndex, ref fullTime);
 
                 this.disp.Invoke(DispatcherPriority.Normal, new Action(delegate ()
@@ -403,6 +434,10 @@ namespace DSPEditor.AudioManager
 
         private void ReverbEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            int delay = (int)passedParams[0];
+            double decay = (double)passedParams[1];
+
             audioItem = AudioItemManager.GetAudioItem();
 
             if (audioItem != null)
@@ -415,7 +450,7 @@ namespace DSPEditor.AudioManager
                 int fullTime = 0;
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioReverbEffect.ReverbInit(3000, 0.5f);
+                AudioReverbEffect.ReverbInit((short)delay, (float)decay);
 
                 int begIndex = (int)beginIndex;
                 int enIndex = (int)endIndex;
@@ -460,7 +495,7 @@ namespace DSPEditor.AudioManager
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
                 float biggest = samplesToProcess.Max();
 
-                AudioDistortionEffect.DistortionInit(biggest / 1.5f);
+                AudioDistortionEffect.DistortionInit(biggest / 5f);
 
                 if (threadsValue > 1)
                 {
@@ -536,6 +571,10 @@ namespace DSPEditor.AudioManager
 
         private void DelayEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            double feedbackLevel = (double)passedParams[0];
+            double delayLevel = (double)passedParams[1];
+
             audioItem = AudioItemManager.GetAudioItem();
 
             if (audioItem != null)
@@ -549,7 +588,7 @@ namespace DSPEditor.AudioManager
                 int fullTime = 0;
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioDelayEffect.DelayInit();
+                AudioDelayEffect.DelayInit((float)feedbackLevel, (float)delayLevel);
                 if (threadsValue > 1)
                 {
                     samplesCountForThreads = (int)((endIndex - beginIndex) / threadsValue);
@@ -624,6 +663,14 @@ namespace DSPEditor.AudioManager
 
         private void FlangerEffectWorkHandler(object sender, DoWorkEventArgs e)
         {
+            List<object> passedParams = e.Argument as List<object>;
+            int effectRate = (int)passedParams[0];
+            int maxD = (int)passedParams[1];
+            int minD = (int)passedParams[2];
+            double fwv = (double)passedParams[3];
+            double step = (double)passedParams[4];
+            double fbv = (double)passedParams[5];
+
             audioItem = AudioItemManager.GetAudioItem();
 
             if (audioItem != null)
@@ -636,7 +683,7 @@ namespace DSPEditor.AudioManager
                 int fullTime = 0;
                 SetDataForProcessing(out samplesToProcess, out minutes, out beginIndex, out endIndex, out seconds, out miliseconds);
 
-                AudioFlangerEffect.FlangerInit(500, 16000, 70, 2, 0.3, 1, 0.3);
+                AudioFlangerEffect.FlangerInit((short)effectRate, 16000, (short)maxD, (short)minD, fwv, step, fbv);
 
                 if (threadsValue > 1)
                 {

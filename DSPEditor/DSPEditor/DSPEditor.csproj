@@ -92,9 +92,51 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AudioEffects\SubWindows\DelaySubWindow.xaml.cs">
+      <DependentUpon>DelaySubWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AudioEffects\SubWindows\FlangerSubWindow.xaml.cs">
+      <DependentUpon>FlangerSubWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AudioEffects\SubWindows\ReverbSubWindow.xaml.cs">
+      <DependentUpon>ReverbSubWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AudioEffects\SubWindows\SineWaveSubWindow.xaml.cs">
+      <DependentUpon>SineWaveSubWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AudioEffects\SubWindows\TremoloSubWindow.xaml.cs">
+      <DependentUpon>TremoloSubWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AudioEffects\SubWindows\WahWahSubWindow.xaml.cs">
+      <DependentUpon>WahWahSubWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\OutputLogWriter.cs" />
     <Compile Include="Utility\SampleAggregator.cs" />
     <Compile Include="Utility\UIUtility.cs" />
+    <Page Include="AudioEffects\SubWindows\DelaySubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioEffects\SubWindows\FlangerSubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioEffects\SubWindows\ReverbSubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioEffects\SubWindows\SineWaveSubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioEffects\SubWindows\TremoloSubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AudioEffects\SubWindows\WahWahSubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,15 +145,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AudioEffects\AudioChorusEffect.cs" />
-    <Compile Include="AudioEffects\AudioDelayEffect.cs" />
-    <Compile Include="AudioEffects\AudioDistortionEffect.cs" />
-    <Compile Include="AudioEffects\AudioFlangerEffect.cs" />
-    <Compile Include="AudioEffects\AudioPhaserEffect.cs" />
-    <Compile Include="AudioEffects\AudioReverbEffect.cs" />
-    <Compile Include="AudioEffects\AudioSineWaveEffect.cs" />
-    <Compile Include="AudioEffects\AudioTremoloEffect.cs" />
-    <Compile Include="AudioEffects\AudioWahWahEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioChorusEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioDelayEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioDistortionEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioFlangerEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioPhaserEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioReverbEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioSineWaveEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioTremoloEffect.cs" />
+    <Compile Include="AudioEffects\CppLibraryImports\AudioWahWahEffect.cs" />
     <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
     <Compile Include="AudioItemBuilder\IAudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />

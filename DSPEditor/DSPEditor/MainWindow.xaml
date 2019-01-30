@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:DSPEditor"
         xmlns:svl="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
-        Title="DSPEditor" Height="594" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12" WindowStyle="ThreeDBorderWindow">
+        Title="DSPEditor" Height="594" Width="800"  WindowStartupLocation="CenterScreen" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="CanMinimize" Icon="DSPEditor.png" FontFamily="Rockwell" BorderBrush="Black" FontSize="12" WindowStyle="ThreeDBorderWindow">
     <Grid Background="#FF3F3F46" Opacity="0.95">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

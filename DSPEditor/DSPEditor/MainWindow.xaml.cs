@@ -20,6 +20,8 @@ using DSPEditor.AudioManager;
 using NAudio.Wave;
 using WPFSoundVisualizationLib;
 using DSPEditor.Utility;
+using DSPEditor.AudioEffects;
+using DSPEditor.AudioEffects.SubWindows;
 
 namespace DSPEditor
 {
@@ -28,6 +30,7 @@ namespace DSPEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Window paramsSubWindow;
 
         public static ProgressBar progressBar;
         public static WaveformTimeline waveFormTimeLine;
@@ -156,59 +159,140 @@ namespace DSPEditor
 
         }
 
+        #region Flanger
         private void FlangerSample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddFlangerEffect();
+            paramsSubWindow = new FlangerSubWindow();
+            ((FlangerSubWindow)paramsSubWindow).FlangerStartProcessing += ProcessFlangerSample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessFlangerSample(int effect_rate, int maxd, int mind, double fwv, double stepd, double fbv)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddFlangerEffect(effect_rate, maxd, mind, fwv, stepd, fbv);
+        }
+
+        #endregion
+
+        #region Tremolo
         private void TremoloSample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddTremoloEffect();
+            paramsSubWindow = new TremoloSubWindow();
+            ((TremoloSubWindow)paramsSubWindow).TremoloStartProcessing += ProcessTremoloSample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessTremoloSample(int effectRate, double depth)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddTremoloEffect(effectRate, depth);
+        }
+
+        #endregion
+
+        #region Chours
         private void ChorusSample(object sender, RoutedEventArgs e)
         {
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddChorusEffect();
         }
 
+        #endregion
+
+        #region Delay
         private void DelaySample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddDelayEffect();
+            paramsSubWindow = new DelaySubWindow();
+            ((DelaySubWindow)paramsSubWindow).DelayStartProcessing += ProcessDelaySample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessDelaySample(double feedback_level, double delay_decay)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddDelayEffect(feedback_level, delay_decay);
+        }
+
+        #endregion
+
+        #region Reverb
         private void ReverbSample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddReverbEffect();
+            paramsSubWindow = new ReverbSubWindow();
+            ((ReverbSubWindow)paramsSubWindow).ReverbStartProcessing += ProcessReverbSample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessReverbSample(int delay, double decay)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddReverbEffect(delay, decay);
+        }
+
+        #endregion
+
+        #region WahWah
         private void WahWahSample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddWahWahEffect();
+            paramsSubWindow = new WahWahSubWindow();
+            ((WahWahSubWindow)paramsSubWindow).WahStartProcessing += ProcessWahWahSample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessWahWahSample(int effect_rate, int maxf, int minf, int Q, double gainfactor)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddWahWahEffect(effect_rate, maxf, minf, Q, gainfactor);
+        }
+
+        #endregion
+
+        #region Pahser
         private void PhaserSample(object sender, RoutedEventArgs e)
         {
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddPhaserEffect();
         }
 
+        #endregion
+
+        #region SineWave
         private void SineWaveSample(object sender, RoutedEventArgs e)
         {
-            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
-            AudioEffectManager.Instance.AddSineWaveEffect();
+            paramsSubWindow = new SineWaveSubWindow();
+            ((SineWaveSubWindow)paramsSubWindow).SinWaveStartProcessing += ProcessSineWaveSample;
+            paramsSubWindow.ShowDialog();
         }
 
+        private void ProcessSineWaveSample(int freq, double ampl)
+        {
+            paramsSubWindow.Close();
+            paramsSubWindow = null;
+            AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
+            AudioEffectManager.Instance.AddSineWaveEffect(freq, ampl);
+        }
+
+        #endregion
+
+        #region Distortion
         private void DistortionSample(object sender, RoutedEventArgs e)
         {
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddDistortionEffect();
         }
+
+        #endregion
 
         private void MuteSample(object sender, RoutedEventArgs e)
         {

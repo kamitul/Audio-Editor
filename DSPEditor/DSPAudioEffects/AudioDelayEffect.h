@@ -12,7 +12,7 @@ int delay_length;
 double feedbackLevel;
 double delayLevel;
 
-extern "C" __declspec(dllexport) void DelayInit() {
+extern "C" __declspec(dllexport) void DelayInit(double _feedbackLevel, double _delayLevel) {
 
 	int i = 0;
 	for (i = 0; i < MAX_DELAY_LENGTH; i++) buffer[i] = 0;
@@ -20,8 +20,8 @@ extern "C" __declspec(dllexport) void DelayInit() {
 	offsetIndex = 44100 / 2;
 	currentIndex = 0;
 	bufferLength = 44100;
-	feedbackLevel = 0.6;
-	delayLevel = 0.5;
+	feedbackLevel = _feedbackLevel;
+	delayLevel = _delayLevel;
 
 
 }
