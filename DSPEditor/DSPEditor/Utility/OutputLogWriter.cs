@@ -31,7 +31,7 @@ namespace DSPEditor.Utility
 
         public void SubscripeToOpeningClosingAudioEvents()
         {
-            MainWindow.AudioFileOpenedExported += WriteToOutputLog;
+            MainWindow.MainWindowLogAction += WriteToOutputLog;
         }
 
         public void WriteToOutputLog(string log)

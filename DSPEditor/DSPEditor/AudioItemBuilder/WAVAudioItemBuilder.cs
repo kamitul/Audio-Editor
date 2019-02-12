@@ -33,7 +33,7 @@ namespace DSPEditor.AudioItemBuilder
             audioItem.WaveFormat = reader.WaveFormat;
         }
 
-        public WaveFileReader GetFileReader()
+        public WaveStream GetFileReader()
         {
             return waveFileReader;
         }

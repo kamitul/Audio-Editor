@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPEditor.AudioEffects.CppLibraryImports;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioDelayEffect
+    class AudioDelayEffect : AudioEffect
     {
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DelayInit(double _feedbackLevel, double _delayLevel);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float DelayProcess(float in_sample, ref int time_elapsed);
     }
 }

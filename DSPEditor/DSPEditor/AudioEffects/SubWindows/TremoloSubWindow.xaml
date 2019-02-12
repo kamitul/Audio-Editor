@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0">
             <Label Content ="Effect rate" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,6,0" />
-            <toolkit:IntegerUpDown x:Name="EffectRate" Value="2000" Increment="100" Minimum="0" Maximum="3000" Margin="5,20,10,0" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="20" BorderBrush="#FF0742F5" Background="#FFAFAFBD"/>
+            <toolkit:IntegerUpDown x:Name="EffectRate" Value="4000" Increment="100" Minimum="1500" Maximum="5000" Margin="5,20,10,0" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="20" BorderBrush="#FF0742F5" Background="#FFAFAFBD"/>
         </Grid>
 
         <Grid Grid.Row="1">

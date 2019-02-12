@@ -36,7 +36,6 @@
             </MenuItem>
             <MenuItem Header="_Effect">
                 <MenuItem Header="_Modulation effects">
-                    <MenuItem Header="_Flanger" Click="FlangerSample"/>
                     <MenuItem Header="_Tremolo" Click="TremoloSample"/>
                 </MenuItem>
                 <MenuItem Header="_Time-based effects">
@@ -45,13 +44,12 @@
                 </MenuItem>
                 <MenuItem Header="_Custom">
                     <MenuItem Header="_Wah-wah" Click="WahWahSample"/>
-                    <MenuItem Header="_Sinewave" Click="SineWaveSample"/>
                     <MenuItem Header="_Distortion" Click="DistortionSample"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_DLL Type">
-                <MenuItem Header="_C++"/>
-                <MenuItem Header="_MASMx86"/>
+                <MenuItem Header="_C++" Click="CppSelect"/>
+                <MenuItem Header="_MASM" Click="MasmSelect"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1"
@@ -462,7 +460,7 @@
                                 IsReadOnly="True" Background="#FF2D2D30" Foreground="#FF4E9447" BorderBrush="#FF489A48" CaretBrush="#FF4E9447" HorizontalAlignment="Right" Width="89" />
 
                 <Label Content="Threads count" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,30,6,0" />
-                <toolkit:IntegerUpDown x:Name="ThreadsValue" Value="0" Increment="1" Minimum="0" Maximum="3000" Margin="5,0,10,0" Text="0"/>
+                <toolkit:IntegerUpDown x:Name="ThreadsValue" Value="1" Increment="1" Minimum="1" Margin="5,0,10,0" Text="0"/>
                 
             </StackPanel>
         </Grid>

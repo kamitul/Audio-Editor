@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using DSPEditor.AudioEffects.CppLibraryImports;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioPhaserEffect
+    class AudioPhaserEffect : AudioEffect
     {
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void PhaserInit(double rateParam, double widthParam);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float PhaserProcess(float inval, ref int time_elapsed);
 
     }

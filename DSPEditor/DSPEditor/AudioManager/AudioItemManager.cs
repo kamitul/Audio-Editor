@@ -100,7 +100,11 @@ namespace DSPEditor.Audio
             AudioType audioType = CheckFileExtension(Path.GetExtension(filePath));
             SetAudioType(audioType);
             SetFilePath(filePath);
-            audioUIPlayer.SetAudioPlayer(audioItemBuilder.GetFileReader(), filePath);
+
+            if(audioType == AudioType.MP3)
+                audioUIPlayer.SetAudioPlayerMP3(audioItemBuilder.GetFileReader() as Mp3FileReader, filePath);
+            if(audioType == AudioType.WAV)
+                audioUIPlayer.SetAudioPlayerWAV(audioItemBuilder.GetFileReader() as WaveFileReader, filePath);
 
             if (WriteToOutputLog != null)
                 WriteToOutputLog("Initalized audio file: " + Path.GetFileName(filePath));

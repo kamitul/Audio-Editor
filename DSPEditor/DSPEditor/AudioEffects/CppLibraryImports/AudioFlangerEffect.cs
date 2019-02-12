@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-
+using DSPEditor.AudioEffects.CppLibraryImports;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioFlangerEffect
+    class AudioFlangerEffect : AudioEffect
     {
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void FlangerInit(short effect_rate, short sampling, short maxd, short mind, double fwv, double stepd, double fbv);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float FlangerProcess(float xin, ref int time_elapsed);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void FlangerSweep();
     }
 }

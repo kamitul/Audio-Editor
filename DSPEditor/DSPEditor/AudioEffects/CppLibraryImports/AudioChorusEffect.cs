@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPEditor.AudioEffects.CppLibraryImports;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioChorusEffect
+    class AudioChorusEffect : AudioEffect
     {
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ChorusInit(double rate, double width);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern float ChorusProcess(float inval);
     }
 }

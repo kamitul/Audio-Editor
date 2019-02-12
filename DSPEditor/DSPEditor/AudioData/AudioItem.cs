@@ -14,11 +14,32 @@ namespace DSPEditor.Audio
         private float[] processedAudioBuffer;
         private float[] originalAudioBuffer;
         private WaveFormat waveFormat;
-      
 
         public float[] ProcessedAudioBuffer { get => processedAudioBuffer; set => processedAudioBuffer = value; }
         public string FilePath { get => filePath; set => filePath = value; }
         public float[] OriginalAudioBuffer { get => originalAudioBuffer; set => originalAudioBuffer = value; }
         public WaveFormat WaveFormat { get => waveFormat; set => waveFormat = value; }
+
+        public float[] AudioBuffer
+        {
+            get
+            {
+                if (processedAudioBuffer != null)
+                {
+                    return processedAudioBuffer;
+                }
+                else
+                {
+                    return originalAudioBuffer;
+                }
+
+            }
+
+            set
+            {
+
+            }
+        }
+
     }
 }

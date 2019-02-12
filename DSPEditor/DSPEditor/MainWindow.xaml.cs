@@ -22,6 +22,7 @@ using WPFSoundVisualizationLib;
 using DSPEditor.Utility;
 using DSPEditor.AudioEffects;
 using DSPEditor.AudioEffects.SubWindows;
+using NAudio.Lame;
 
 namespace DSPEditor
 {
@@ -42,11 +43,13 @@ namespace DSPEditor
 
         private OutputLogWriter outputLogWriter = new OutputLogWriter();
 
-        public static Action<string> AudioFileOpenedExported;
+        public static Action<string> MainWindowLogAction;
 
         public MainWindow()
         {
             InitializeComponent();
+            int coreCount = GetThreadsCount();
+            ThreadsValue.Maximum = coreCount;
             progressBar = AlgoTime;
             waveFormTimeLine = waveform;
             digitalClock = clockDisplay;
@@ -56,35 +59,6 @@ namespace DSPEditor
             scrollViewerLog = OutputLog;
 
             outputLogWriter.SubscripeToOpeningClosingAudioEvents();
-        }
-
-        private void OpenFile(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Audio files (*.mp3;*.wav)|*.mp3;*.wav|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = @"c:\";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                if(openFileDialog.FileName == "")
-                {
-                    if (AudioFileOpenedExported != null)
-                    {
-                        AudioFileOpenedExported("Audio file not opened!");
-                    }
-                }
-                else
-                {
-                    AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
-                }
-            }
-            else
-            {
-                if (AudioFileOpenedExported != null)
-                {
-                    AudioFileOpenedExported("Audio file not opened!");
-                }
-            }
-           
         }
 
         private void Close(object sender, RoutedEventArgs e)
@@ -103,8 +77,118 @@ namespace DSPEditor
 
         }
 
+        #region FileOperations
+
         private void ExportMP3File(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            var audioItem = AudioItemManager.GetAudioItem();
+            if (audioItem != null)
+            {
+                saveFileDialog.FileName = System.IO.Path.GetFileName(audioItem.FilePath) + "processed"; // Default file name
+                saveFileDialog.DefaultExt = ".mp3";
+                saveFileDialog.Filter = "MP3 files (.mp3)|*.mp3";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filename = saveFileDialog.FileName;
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.Append(filename.Remove(filename.Length - 4, 4));
+                    stringBuilder.Append(".wav");
+
+                    filename = stringBuilder.ToString();
+
+                    stringBuilder.Clear();
+
+                    using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
+                    {
+                        if (AudioItemManager.GetAudioItem() != null)
+                        {
+                            writer.WriteSamples(AudioItemManager.GetAudioItem().AudioBuffer, 0, AudioItemManager.GetAudioItem().AudioBuffer.Length / 2);
+                            writer.Dispose();
+                            writer.Close();
+
+                            filename = ConvertWAVToMp3File(filename, stringBuilder);
+
+                            DeleteWAVFileAfterConversion(filename, stringBuilder);
+                        }
+                        else
+                            MainWindowLogAction("Cannot export not changed file! " + filename);
+                    }
+                    if (MainWindowLogAction != null)
+                    {
+                        MainWindowLogAction("Exported edited audio file, filePath: " + filename);
+                    }
+                }
+            }
+            else
+            {
+                if (MainWindowLogAction != null)
+                {
+                    MainWindowLogAction("Cannot export empty file!");
+                }
+            }
+        }
+
+        private void DeleteWAVFileAfterConversion(string filename, StringBuilder stringBuilder)
+        {
+            stringBuilder.Clear();
+            stringBuilder.Append(filename.Remove(filename.Length - 4, 4));
+            stringBuilder.Append(".wav");
+
+            filename = stringBuilder.ToString();
+
+            File.Delete(filename);
+        }
+
+        private static string ConvertWAVToMp3File(string filename, StringBuilder stringBuilder)
+        {
+            using (var reader = new WaveFileReader(filename))
+            {
+                stringBuilder.Append(filename.Remove(filename.Length - 4, 4));
+                stringBuilder.Append(".mp3");
+
+                filename = stringBuilder.ToString();
+
+                using (var wtr = new LameMP3FileWriter(filename, reader.WaveFormat, 128))
+                {
+                    reader.CopyTo(wtr);
+                    reader.Dispose();
+                    wtr.Dispose();
+                }
+            }
+
+            return filename;
+        }
+
+
+        private void OpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Audio files (*.mp3;*.wav)|*.mp3;*.wav|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = @"c:\";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (openFileDialog.FileName == "")
+                {
+                    if (MainWindowLogAction != null)
+                    {
+                        MainWindowLogAction("Audio file not opened!");
+                    }
+                }
+                else
+                {
+                    AudioItemManager.Instance.InitializeAudioBuilder(openFileDialog.FileName);
+                }
+            }
+            else
+            {
+                if (MainWindowLogAction != null)
+                {
+                    MainWindowLogAction("Audio file not opened!");
+                }
+            }
 
         }
 
@@ -119,10 +203,10 @@ namespace DSPEditor
             {
                 string filePath = saveFileDialog.FileName;
                 OutputLogWriter.WriteOutputLogToFile(filePath);
-                if (AudioFileOpenedExported != null)
+                if (MainWindowLogAction != null)
                 {
                     if(filePath != null)
-                        AudioFileOpenedExported("Exported output log to: " + filePath);
+                        MainWindowLogAction("Exported output log to: " + filePath);
                 }
             }
         }
@@ -141,23 +225,35 @@ namespace DSPEditor
                     string filename = saveFileDialog.FileName;
                     using (WaveFileWriter writer = new WaveFileWriter(filename, AudioItemManager.GetAudioItem().WaveFormat))
                     {
-                        writer.WriteSamples(AudioItemManager.GetAudioItem().ProcessedAudioBuffer, 0, AudioItemManager.GetAudioItem().ProcessedAudioBuffer.Length / 2);
+                        if (AudioItemManager.GetAudioItem() != null)
+                        {
+                            writer.WriteSamples(AudioItemManager.GetAudioItem().AudioBuffer, 0, AudioItemManager.GetAudioItem().AudioBuffer.Length / 2);
+                            writer.Dispose();
+                            writer.Close();
+                        }
+                        else
+                            MainWindowLogAction("Cannot export not changed file! " + filename);
+
+                        writer.Dispose();
+                        writer.Close();
                     }
-                    if (AudioFileOpenedExported != null)
+                    if (MainWindowLogAction != null)
                     {
-                        AudioFileOpenedExported("Exported edited audio file, filePath: " + filename);
+                        MainWindowLogAction("Exported edited audio file, filePath: " + filename);
                     }
                 }
             }
             else
             {
-                if (AudioFileOpenedExported != null)
+                if (MainWindowLogAction != null)
                 {
-                    AudioFileOpenedExported("Cannot export empty file!");
+                    MainWindowLogAction("Cannot export empty file!");
                 }
             }
 
         }
+
+        #endregion
 
         #region Flanger
         private void FlangerSample(object sender, RoutedEventArgs e)
@@ -171,8 +267,27 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddFlangerEffect(effect_rate, maxd, mind, fwv, stepd, fbv);
+        }
+
+        private static int GetThreadsCount()
+        {
+            int coreCount = 0;
+            int threadsCount = 0;
+            foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_Processor").Get())
+            {
+                coreCount += int.Parse(item["NumberOfCores"].ToString());
+            }
+            foreach (var item in new System.Management.ManagementObjectSearcher("Select * from Win32_ComputerSystem").Get())
+            {
+                threadsCount += int.Parse(item["NumberOfLogicalProcessors"].ToString());
+            }
+
+            return coreCount * threadsCount * 4;
         }
 
         #endregion
@@ -189,6 +304,9 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddTremoloEffect(effectRate, depth);
         }
@@ -198,6 +316,7 @@ namespace DSPEditor
         #region Chours
         private void ChorusSample(object sender, RoutedEventArgs e)
         {
+            int coreCount = GetThreadsCount();
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddChorusEffect();
         }
@@ -216,6 +335,9 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddDelayEffect(feedback_level, delay_decay);
         }
@@ -234,6 +356,9 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddReverbEffect(delay, decay);
         }
@@ -252,6 +377,9 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddWahWahEffect(effect_rate, maxf, minf, Q, gainfactor);
         }
@@ -261,6 +389,9 @@ namespace DSPEditor
         #region Pahser
         private void PhaserSample(object sender, RoutedEventArgs e)
         {
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddPhaserEffect();
         }
@@ -279,6 +410,9 @@ namespace DSPEditor
         {
             paramsSubWindow.Close();
             paramsSubWindow = null;
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddSineWaveEffect(freq, ampl);
         }
@@ -288,6 +422,9 @@ namespace DSPEditor
         #region Distortion
         private void DistortionSample(object sender, RoutedEventArgs e)
         {
+            int coreCount = GetThreadsCount();
+            if (ThreadsValue.Value > coreCount)
+                ThreadsValue.Value = coreCount;
             AudioEffectManager.Instance.SetThreadValue(ThreadsValue.Value);
             AudioEffectManager.Instance.AddDistortionEffect();
         }
@@ -332,6 +469,24 @@ namespace DSPEditor
         private void ClearLog(object sender, RoutedEventArgs e)
         {
             OutputLogText.Text = "";
+        }
+
+        private void CppSelect(object sender, RoutedEventArgs e)
+        {
+            AudioEffectManager.Instance.dllType = AudioEffects.CppLibraryImports.DllType.Cpp;
+            if (MainWindowLogAction != null)
+            {
+                MainWindowLogAction("Chnaged implementation mode to C++");
+            }
+        }
+
+        private void MasmSelect(object sender, RoutedEventArgs e)
+        {
+            AudioEffectManager.Instance.dllType = AudioEffects.CppLibraryImports.DllType.MASM;
+            if (MainWindowLogAction != null)
+            {
+                MainWindowLogAction("Chnaged implementation mode to MASM, architecture x64");
+            }
         }
     }
 }

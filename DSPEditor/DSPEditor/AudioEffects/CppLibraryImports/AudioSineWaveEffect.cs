@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPEditor.AudioEffects.CppLibraryImports;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioSineWaveEffect
+    class AudioSineWaveEffect : AudioEffect
     {
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SineWaveInit(int freq, float amp);
 
-        [DllImport("DSPAudioEffects.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void SineWaveProcess(IntPtr tab, int sampleCount, int sampleRate, int begin_index, int end_index, ref int time_elapsed);
 
         public static unsafe void AddSineWave(float[] samples, int sampleRate, int begin_index, int end_index, ref int time_elapsed)

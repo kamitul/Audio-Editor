@@ -87,7 +87,35 @@ namespace DSPEditor.AudioManager
         }
         #endregion
 
-        public void SetAudioPlayer(WaveFileReader inWaveStream, string filePath)
+        public void SetAudioPlayerWAV(WaveFileReader inWaveStream, string filePath)
+        {
+            Stop();
+
+            if (ActiveStream != null)
+            {
+                SelectionBegin = TimeSpan.Zero;
+                SelectionEnd = TimeSpan.Zero;
+                ChannelPosition = 0;
+            }
+
+            StopAndCloseStream();
+
+            waveOutDevice = new WaveOutEvent()
+            {
+                Volume = 0.5f
+            };
+
+
+            inputStream = new WaveChannel32(inWaveStream);
+            ActiveStream = inputStream;
+            ChannelLength = inputStream.TotalTime.TotalSeconds;
+            waveOutDevice.Init(inputStream);
+            GenerateWaveformData(filePath);
+            CanPlay = true;
+            positionTimer.Start();
+        }
+
+        public void SetAudioPlayerMP3(Mp3FileReader inWaveStream, string filePath)
         {
             Stop();
 
