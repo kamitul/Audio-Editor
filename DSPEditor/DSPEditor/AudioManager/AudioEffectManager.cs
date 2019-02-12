@@ -1,5 +1,7 @@
 ﻿using DSPEditor.Audio;
 using DSPEditor.AudioEffects;
+using DSPEditor.AudioEffects.AudioEffectProcess;
+using DSPEditor.AudioEffects.AudioEffectProcess.AudioEffectsItems;
 using DSPEditor.AudioEffects.CppLibraryImports;
 using DSPEditor.DSPAudioEffects;
 using DSPEditor.Utility;
@@ -22,6 +24,8 @@ namespace DSPEditor.AudioManager
         private static AudioEffectManager instance = null;
         private static readonly object padlock = new object();
         private AudioItem audioItem;
+
+        private List<Tuple<string, AudioEffect>> audioEffects = new List<Tuple<string,AudioEffect>>();
 
         private Dispatcher disp = Dispatcher.CurrentDispatcher;
         private BackgroundWorker worker = new BackgroundWorker();
@@ -71,6 +75,14 @@ namespace DSPEditor.AudioManager
             worker.RunWorkerCompleted += AudioEffectAdditionCompleted;
 
             outputLogWriter.SubscribeToAudioEffectEvent();
+
+            audioEffects.Add(new Tuple<string, AudioEffect>("Reverb Effect",new ReverbEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("SineWave Effect", new SineWaveEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("Delay Effect", new DelayEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("Distortion Effect", new DistortionEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("Flanger Effect", new FlangerEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("Tremolo Effect", new TremoloEffect()));
+            audioEffects.Add(new Tuple<string, AudioEffect>("WahWah Effect", new WahWahEffect()));
         }
 
         private void AudioEffectAdditionCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -848,42 +860,6 @@ namespace DSPEditor.AudioManager
         {
             threadsValue = value.Value;
             threads.Clear();
-        }
-
-        public void AddChorusEffect()
-        {
-            //AudioChorusEffect.ChorusInit(0.5f, 0.1f);
-
-            //audioItem = AudioItemManager.GetAudioItem();
-
-            //float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-            //for (int i = 0; i < samplesToProcess.Length; ++i)
-            //{
-            //    samplesToProcess[i] = AudioChorusEffect.ChorusProcess(samplesToProcess[i]);
-            //}
-
-            //audioItem.ProcessedAudioBuffer = samplesToProcess;
-
-            //AudioItemManager.SetAudioItem(audioItem);
-        }
-
-        public void AddPhaserEffect()
-        {
-            //AudioPhaserEffect.PhaserInit(0.3f, 0.8f);
-
-            //audioItem = AudioItemManager.GetAudioItem();
-
-            //float[] samplesToProcess = audioItem.OriginalAudioBuffer;
-
-            //for (int i = 0; i < samplesToProcess.Length; ++i)
-            //{
-            //    samplesToProcess[i] = AudioPhaserEffect.PhaserProcess(samplesToProcess[i]);
-            //}
-
-            //audioItem.ProcessedAudioBuffer = samplesToProcess;
-
-            //AudioItemManager.SetAudioItem(audioItem);
         }
 
     }

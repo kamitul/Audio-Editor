@@ -60,8 +60,8 @@ namespace DSPEditor.AudioManager
             waveformGenerateWorker.RunWorkerCompleted += WaveFormGenerateWorkCompleted;
             waveformGenerateWorker.WorkerSupportsCancellation = true;
 
-            UIUtility.Bind(this, "SelectionBegin", MainWindow.startTime, TimeEditor.ValueProperty, BindingMode.TwoWay);
-            UIUtility.Bind(this, "SelectionEnd", MainWindow.stopTime, TimeEditor.ValueProperty, BindingMode.TwoWay);
+            Utilty.Bind(this, "SelectionBegin", MainWindow.startTime, TimeEditor.ValueProperty, BindingMode.TwoWay);
+            Utilty.Bind(this, "SelectionEnd", MainWindow.stopTime, TimeEditor.ValueProperty, BindingMode.TwoWay);
 
         }
         #endregion

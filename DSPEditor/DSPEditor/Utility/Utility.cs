@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace DSPEditor.Utility
 {
-    class UIUtility
+    class Utilty
     {
         public static void Bind(object dataSource, string sourcePath, FrameworkElement destinationObject, DependencyProperty dp, BindingMode bindingMode)
         {
@@ -27,6 +27,18 @@ namespace DSPEditor.Utility
                 Converter = converter
             };
             destinationObject.SetBinding(dp, binding);
+        }
+
+        public static float[] ToFloatArray(object[] arraySamples)
+        {
+            float[] samples = new float[arraySamples.Length];
+
+            for(int i = 0; i < arraySamples.Length; ++i)
+            {
+                samples[i] = (float)(arraySamples[i]);
+            }
+
+            return samples;
         }
     }
 }

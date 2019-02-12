@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.DSPAudioEffects
 {
-    class AudioReverbEffect : AudioEffect
+    class AudioReverbEffect : AudioImportEffect
     {
         [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void ReverbInit(int delay, float _decay);

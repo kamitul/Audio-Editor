@@ -99,7 +99,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AudioEffects\CppLibraryImports\AudioEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\SampleProcessable\DelayEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\SampleProcessable\DistortionEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\SampleProcessable\FlangerEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\ArrayProcessable\ReverbEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\ArrayProcessable\SineWaveEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\SampleProcessable\TremoloEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\AudioEffectsItems\SampleProcessable\WahWahEffect.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\IArrayProcessable.cs" />
+    <Compile Include="AudioEffects\AudioEffectProcess\ISampleProcessable.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioImportEffect.cs" />
     <Compile Include="AudioEffects\SubWindows\DelaySubWindow.xaml.cs">
       <DependentUpon>DelaySubWindow.xaml</DependentUpon>
     </Compile>
@@ -120,7 +130,7 @@
     </Compile>
     <Compile Include="Utility\OutputLogWriter.cs" />
     <Compile Include="Utility\SampleAggregator.cs" />
-    <Compile Include="Utility\UIUtility.cs" />
+    <Compile Include="Utility\Utility.cs" />
     <Page Include="AudioEffects\SubWindows\DelaySubWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,15 +163,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AudioEffects\CppLibraryImports\AudioChorusEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioDelayEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioDistortionEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioFlangerEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioPhaserEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioReverbEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioSineWaveEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioTremoloEffect.cs" />
-    <Compile Include="AudioEffects\CppLibraryImports\AudioWahWahEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioDelayEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioDistortionEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioFlangerEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioReverbEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioSineWaveEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioTremoloEffect.cs" />
+    <Compile Include="AudioEffects\DLLLibraryImports\AudioWahWahEffect.cs" />
     <Compile Include="AudioItemBuilder\AudioBuilder.cs" />
     <Compile Include="AudioItemBuilder\IAudioItemBuilder.cs" />
     <Compile Include="AudioItemBuilder\MP3AudioItemBuilder.cs" />

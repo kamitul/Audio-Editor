@@ -12,7 +12,7 @@ namespace DSPEditor.AudioEffects.CppLibraryImports
         MASM
     }
 
-    public abstract class AudioEffect
+    public abstract class AudioImportEffect
     {
         private static DllType dllType;
 

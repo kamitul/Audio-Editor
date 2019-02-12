@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioDistortionEffect : AudioEffect
+    class AudioDistortionEffect : AudioImportEffect
     {
         [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void DistortionInit(float max);

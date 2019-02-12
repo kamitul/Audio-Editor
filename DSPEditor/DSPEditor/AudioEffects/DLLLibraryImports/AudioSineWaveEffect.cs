@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioSineWaveEffect : AudioEffect
+    class AudioSineWaveEffect : AudioImportEffect
     {
         [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SineWaveInit(int freq, float amp);

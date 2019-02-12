@@ -8,7 +8,7 @@ using DSPEditor.AudioEffects.CppLibraryImports;
 
 namespace DSPEditor.AudioEffects
 {
-    class AudioTremoloEffect : AudioEffect
+    class AudioTremoloEffect : AudioImportEffect
     {
         [DllImport("DSPAudioEffectsCpp.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void TremoloInit(short effect_rate, double depth);
