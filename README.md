@@ -1,12 +1,10 @@
 # Project Title
-------------
 DSPEditor
 
 ## Description
------------
 Simple audio editor for adding audio effects on samples
 
-# Features
+Features
 ------------
 * **Adding audio effects on samples**
 - Tremolo
@@ -18,6 +16,6 @@ Simple audio editor for adding audio effects on samples
 * **Playing audio samples**
 
 
-# Built with
+Built with
 ------------
 * [NAudio](https://github.com/naudio/NAudio)
