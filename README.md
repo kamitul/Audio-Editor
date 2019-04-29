@@ -1,1 +1,6 @@
-Program, służący do edycji plików dzwiękowych poprzez nakładanie na nie wybranych filtrów zaimplementowanych w programie
+Simple audio editor where you can add some audio effects on sample:
+- Tremolo
+- Echo
+- Delay
+- Wah-wah
+...
