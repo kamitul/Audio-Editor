@@ -1,7 +1,9 @@
-# Project Title
+Project Title
+------------
 DSPEditor
 
-## Description
+Description
+------------
 Simple audio editor for adding audio effects on samples
 
 Features
