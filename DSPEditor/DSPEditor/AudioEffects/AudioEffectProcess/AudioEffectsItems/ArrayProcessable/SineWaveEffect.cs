@@ -22,8 +22,10 @@ namespace DSPEditor.AudioEffects.AudioEffectProcess.AudioEffectsItems
 
         protected override void InitalizeConcreteAudioEffect()
         {
-            AudioSineWaveEffect.SineWaveInit((int)audioEffectParameters["Frequency"],
-                (float)audioEffectParameters["Amplitude"]);
+            AudioSineWaveEffect.SineWaveInit (
+                    (int)audioEffectParameters["Frequency"],
+                    (float)audioEffectParameters["Amplitude"]
+                );
 
             sampleRate = (int)audioEffectParameters["Sample Rate"];
         }

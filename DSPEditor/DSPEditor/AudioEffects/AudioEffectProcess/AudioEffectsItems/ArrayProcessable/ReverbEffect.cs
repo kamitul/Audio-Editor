@@ -22,8 +22,10 @@ namespace DSPEditor.AudioEffects.AudioEffectProcess.AudioEffectsItems
 
         protected override void InitalizeConcreteAudioEffect()
         {
-            AudioReverbEffect.ReverbEffectInit((int)audioEffectParameters["Delay"],
-                (float)audioEffectParameters["Decay"]);
+            AudioReverbEffect.ReverbEffectInit(
+                    (int)audioEffectParameters["Delay"],
+                    (float)audioEffectParameters["Decay"]
+                );
         }
     }
 }
