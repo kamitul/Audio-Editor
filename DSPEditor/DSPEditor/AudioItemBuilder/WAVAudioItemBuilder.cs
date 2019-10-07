@@ -6,9 +6,6 @@ namespace DSPEditor.AudioItemBuilder
 {
     public class WAVAudioItemBuilder : AudioBuilder, IAudioItemBuilder
     {
-        AudioFileReader reader = null;
-        WaveFileReader waveFileReader = null;
-
         public WAVAudioItemBuilder()
         {
             AudioItem = new AudioItem();
@@ -21,21 +18,21 @@ namespace DSPEditor.AudioItemBuilder
 
         public void OpenAudioFile(string filePath)
         {
-            reader = new AudioFileReader(filePath);
-            waveFileReader = new WaveFileReader(filePath);
+            fileReader = new AudioFileReader(filePath);
+            waveStream = new WaveFileReader(filePath);
 
-            Debug.Assert(reader.WaveFormat.BitsPerSample != 16, "Only works with 16 bit audio");
-            var samples = new float[reader.Length / 2];
-            reader.Read(samples, 0, samples.Length / 2);
+            Debug.Assert(fileReader.WaveFormat.BitsPerSample != 16, "Only works with 16 bit audio");
+            var samples = new float[fileReader.Length / 2];
+            fileReader.Read(samples, 0, samples.Length / 2);
+            LoadAudioItem(filePath, samples);
+        }
 
+        private void LoadAudioItem(string filePath, float[] samples)
+        {
             audioItem.OriginalAudioBuffer = samples;
             audioItem.FilePath = filePath;
-            audioItem.WaveFormat = reader.WaveFormat;
+            audioItem.WaveFormat = fileReader.WaveFormat;
         }
 
-        public WaveStream GetFileReader()
-        {
-            return waveFileReader;
-        }
     }
 }
